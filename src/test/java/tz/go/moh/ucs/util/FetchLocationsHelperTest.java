@@ -1,7 +1,5 @@
 package tz.go.moh.ucs.util;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -9,7 +7,8 @@ import org.junit.jupiter.api.Test;
 import tz.go.moh.ucs.domain.Location;
 
 import java.util.List;
-import java.util.ArrayList;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 // Note: This test class assumes that the ConnectorConstants keys used in FetchLocationsHelper
 // correspond to the following string values:
@@ -31,7 +30,6 @@ public class FetchLocationsHelperTest {
     private static final String ATTRIBUTES = "attributes";
     private static final String VOIDED = "voided";
     private static final String PARENT_LOCATION = "parentLocation";
-    private static final String RESULTS = "results";
 
     // Test makeLocation(String) without attributes and parent
     @Test

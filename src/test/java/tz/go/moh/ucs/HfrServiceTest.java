@@ -103,6 +103,7 @@ public class HfrServiceTest {
 
         @Override
         public void disconnect() {
+            //NOT required
         }
 
         @Override
@@ -112,6 +113,7 @@ public class HfrServiceTest {
 
         @Override
         public void connect() {
+            //NOT required
         }
 
         @Override
