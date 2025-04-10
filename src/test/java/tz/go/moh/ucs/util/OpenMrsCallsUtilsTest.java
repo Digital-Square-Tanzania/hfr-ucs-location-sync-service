@@ -42,45 +42,45 @@ class OpenMrsCallsUtilsTest {
     }
 
     @Test
-    void testUpdateOrCreateLocationAttribute_AddsAttribute() {
+    void testUpdateOrCreateLocationAttributeAddsAttribute() {
         OpenMrsCallsUtils.updateOrCreateLocationAttribute(mockLocation, "uuid-code", "NEWCODE");
         // Just ensure no exception is thrown
         assertTrue(true);
     }
 
     @Test
-    void testGetLocationAttributeUuid_ReturnsNull() {
+    void testGetLocationAttributeUuidReturnsNull() {
         String result = OpenMrsCallsUtils.getLocationAttributeUuid("nonexistent", "fake-type-uuid");
         assertNull(result); // Since no real HTTP response, we expect null
     }
 
     @Test
-    void testUpdateLocationAttribute_HandlesFailure() {
+    void testUpdateLocationAttributeHandlesFailure() {
         OpenMrsCallsUtils.updateLocationAttribute("fake-uuid", "fake-attr-uuid", "attrType", "newValue");
         assertTrue(true); // No exception thrown
     }
 
     @Test
-    void testAddLocationAttribute_HandlesFailure() {
+    void testAddLocationAttributeHandlesFailure() {
         OpenMrsCallsUtils.addLocationAttribute(mockLocation, "attrType", "value");
         assertTrue(true); // Should not throw
     }
 
     @Test
-    void testUpdateChildLocationParent_HandlesFailure() {
+    void testUpdateChildLocationParentHandlesFailure() {
         OpenMrsCallsUtils.updateChildLocationParent(mockLocation, "parentUuid");
         assertTrue(true);
     }
 
     @Test
-    void testCreateConnection_InvalidUrlThrowsException() {
+    void testCreateConnectionInvalidUrlThrowsException() {
         assertThrows(Exception.class, () -> {
             OpenMrsCallsUtils.createConnection("::bad-url::", "GET");
         });
     }
 
     @Test
-    void testUpdateLocationName_HandlesFailure() {
+    void testUpdateLocationNameHandlesFailure() {
         int result = OpenMrsCallsUtils.updateLocationName(mockLocation, "NewName");
         assertEquals(-1, result); // Because HTTP calls will fail
     }

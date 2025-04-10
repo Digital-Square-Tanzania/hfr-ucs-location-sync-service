@@ -38,7 +38,7 @@ class UtilsTest {
 
 
     @Test
-    void testFindLocationByCode_whenCodeExists() {
+    void testFindLocationByCodeWhenCodeExists() {
         try (MockedStatic<Utils> mockedUtils = Mockito.mockStatic(Utils.class, CALLS_REAL_METHODS)) {
             Location loc = new Location();
             loc.setName("Test Location");
@@ -52,7 +52,7 @@ class UtilsTest {
     }
 
     @Test
-    void testFindLocationByUuid_whenUuidExists() {
+    void testFindLocationByUuidWhenUuidExists() {
         try (MockedStatic<Utils> mockedUtils = Mockito.mockStatic(Utils.class, CALLS_REAL_METHODS)) {
             Location loc = new Location();
             loc.setLocationId("uuid-123");
@@ -66,7 +66,7 @@ class UtilsTest {
     }
 
     @Test
-    void testEnsureLocationExists_updatesExistingLocationNameAndParent() throws Exception {
+    void testEnsureLocationExistsUpdatesExistingLocationNameAndParent() throws Exception {
         when(mockExistingLocation.hasTag("Village")).thenReturn(true);
         when(mockExistingLocation.getParentLocation()).thenReturn(null);
         when(mockExistingLocation.getLocationId()).thenReturn("existing-uuid");
@@ -85,7 +85,7 @@ class UtilsTest {
     }
 
     @Test
-    void testEnsureLocationExists_createsNewLocationWhenNotFound() throws Exception {
+    void testEnsureLocationExistsCreatesNewLocationWhenNotFound() throws Exception {
 
         try (MockedStatic<Utils> mockUtils = Mockito.mockStatic(Utils.class, CALLS_REAL_METHODS);
              MockedStatic<OpenMrsCallsUtils> mockOpenMrs = Mockito.mockStatic(OpenMrsCallsUtils.class);
@@ -116,19 +116,19 @@ class UtilsTest {
     }
 
     @Test
-    void testEnsureLocationExists_returnsNullWhenCodeIsNull() throws Exception {
+    void testEnsureLocationExistsReturnsNullWhenCodeIsNull() throws Exception {
         Location result = Utils.ensureLocationExists(mockParentLocation, "Name", null, "Region");
         assertNull(result);
     }
 
     @Test
-    void testEnsureLocationExists_returnsNullWhenParentIsNullForNonRegion() throws Exception {
+    void testEnsureLocationExistsReturnsNullWhenParentIsNullForNonRegion() throws Exception {
         Location result = Utils.ensureLocationExists(null, "Name", "C123", "Village");
         assertNull(result);
     }
 
     @Test
-    void testImportHamletLocationsFromCSV_handlesCSVCorrectly() {
+    void testImportHamletLocationsFromCSVHandlesCSVCorrectly() {
         List<LocationCSVRow> rows = new ArrayList<>();
         LocationCSVRow row = new LocationCSVRow();
         row.setVillageCode("V123");
