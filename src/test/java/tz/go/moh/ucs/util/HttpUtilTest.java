@@ -18,36 +18,36 @@ class HttpUtilTest {
     private MockWebServer mockWebServer;
 
     @Test
-    void testRemoveEndingSlash_RemovesSlash() {
+    void testRemoveEndingSlashRemovesSlash() {
         String result = HttpUtil.removeEndingSlash("http://example.com/");
         assertEquals("http://example.com", result);
     }
 
     @Test
-    void testRemoveEndingSlash_NoSlash() {
+    void testRemoveEndingSlashNoSlash() {
         String result = HttpUtil.removeEndingSlash("http://example.com");
         assertEquals("http://example.com", result);
     }
 
     @Test
-    void testRemoveEndingSlash_withEmptyString() {
+    void testRemoveEndingSlashWithEmptyString() {
         assertEquals("", HttpUtil.removeEndingSlash(""));
     }
 
     @Test
-    void testRemoveTrailingSlash_RemovesLeadingSlash() {
+    void testRemoveTrailingSlashRemovesLeadingSlash() {
         String result = HttpUtil.removeTrailingSlash("/path");
         assertEquals("path", result);
     }
 
     @Test
-    void testRemoveTrailingSlash_NoLeadingSlash() {
+    void testRemoveTrailingSlashNoLeadingSlash() {
         String result = HttpUtil.removeTrailingSlash("path");
         assertEquals("path", result);
     }
 
     @Test
-    void testRemoveTrailingSlash_withEmptyString() {
+    void testRemoveTrailingSlashWithEmptyString() {
         assertEquals("", HttpUtil.removeTrailingSlash(""));
     }
 
@@ -59,7 +59,7 @@ class HttpUtilTest {
     }
 
     @Test
-    void testCheckSuccessBasedOnHttpCode_EdgeCases() {
+    void testCheckSuccessBasedOnHttpCodeEdgeCases() {
         assertFalse(HttpUtil.checkSuccessBasedOnHttpCode(400));
         assertTrue(HttpUtil.checkSuccessBasedOnHttpCode(399));
     }
