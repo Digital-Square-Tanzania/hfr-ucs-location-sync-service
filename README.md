@@ -1,6 +1,7 @@
 # UCS Location Synchronization Project
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/1f5753fc9732488c87a21d544cd441aa)](https://app.codacy.com/gh/Digital-Square-Tanzania/hfr-ucs-location-sync-service/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 ![Java CI with Gradle](https://github.com/Digital-Square-Tanzania/hfr-ucs-location-sync-service/actions/workflows/gradle.yml/badge.svg)
+[![Coverage Status](https://coveralls.io/repos/github/Digital-Square-Tanzania/hfr-ucs-location-sync-service/badge.svg)](https://coveralls.io/github/Digital-Square-Tanzania/hfr-ucs-location-sync-service)
 
 A Java-based application designed to synchronize health facility location data between the OpenMRS and Health Facility Registry (HFR) systems. It also supports importing hamlet-level location data from CSV files to ensure comprehensive location data management for healthcare systems.
 
