@@ -56,6 +56,12 @@ openmrs {
 hamlet {
   resource_file_name = "Hamlets.csv"
 }
+hfr {
+  baseUrlGetHealthFacilities = "https://hfrs.moh.go.tz/web/index.php?r=api%2Fhealth-facility%2Fhealth-facility-list&search_query=all&page="
+  baseUrlGetHierarchy = "https://hfrs.moh.go.tz/web/index.php?r=api/health-facility/administrative-hierarchy&page="
+  username = "username"
+  password = "password"
+}
 ```
 
 ## Building and Running
