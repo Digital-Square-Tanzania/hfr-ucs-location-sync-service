@@ -30,6 +30,11 @@ class HttpUtilTest {
     }
 
     @Test
+    void testRemoveEndingSlash_withEmptyString() {
+        assertEquals("", HttpUtil.removeEndingSlash(""));
+    }
+
+    @Test
     void testRemoveTrailingSlash_RemovesLeadingSlash() {
         String result = HttpUtil.removeTrailingSlash("/path");
         assertEquals("path", result);
@@ -42,10 +47,21 @@ class HttpUtilTest {
     }
 
     @Test
+    void testRemoveTrailingSlash_withEmptyString() {
+        assertEquals("", HttpUtil.removeTrailingSlash(""));
+    }
+
+    @Test
     void testCheckSuccessBasedOnHttpCode() {
         assertFalse(HttpUtil.checkSuccessBasedOnHttpCode(404));
         assertFalse(HttpUtil.checkSuccessBasedOnHttpCode(500));
         assertTrue(HttpUtil.checkSuccessBasedOnHttpCode(200));
+    }
+
+    @Test
+    void testCheckSuccessBasedOnHttpCode_EdgeCases() {
+        assertFalse(HttpUtil.checkSuccessBasedOnHttpCode(400));
+        assertTrue(HttpUtil.checkSuccessBasedOnHttpCode(399));
     }
 
     @Test
@@ -136,5 +152,40 @@ class HttpUtilTest {
 
         assertNotNull(response);
         assertEquals(errorResponse, response);
+    }
+
+    @Test
+    void testPost_withoutAuth() {
+        assertThrows(RuntimeException.class, () ->
+            HttpUtil.post("http://invalid-url", null, "{\"key\":\"value\"}")
+        );
+    }
+
+    @Test
+    void testPost_withBasicAuth() {
+        assertThrows(RuntimeException.class, () ->
+            HttpUtil.post("http://invalid-url", null, "{\"key\":\"value\"}", "application/json", HttpUtil.AuthType.BASIC, "user:pass")
+        );
+    }
+
+    @Test
+    void testGet_withoutAuth() {
+        assertThrows(RuntimeException.class, () ->
+            HttpUtil.get("http://invalid-url", null)
+        );
+    }
+
+    @Test
+    void testGet_withToken() {
+        assertThrows(RuntimeException.class, () ->
+            HttpUtil.getWithToken("http://invalid-url", null, "token")
+        );
+    }
+
+    @Test
+    void testDelete_withTokenAuth() {
+        assertThrows(RuntimeException.class, () ->
+            HttpUtil.delete("http://invalid-url", null, HttpUtil.AuthType.TOKEN, "token")
+        );
     }
 }

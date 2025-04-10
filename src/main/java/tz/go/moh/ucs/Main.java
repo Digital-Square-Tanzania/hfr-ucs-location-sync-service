@@ -133,43 +133,10 @@ public class Main {
                 Location districtLoc = ensureLocationExists(regionLoc, capitalizeWords(facilityJson.getString("district")), facilityJson.getString("District_Code"), "District");
                 Location councilLoc = ensureLocationExists(districtLoc, capitalizeWords(facilityJson.getString("council")), facilityJson.getString("Council_Code"), "Council");
                 Location wardLoc = ensureLocationExists(councilLoc, capitalizeWords(facilityJson.getString("ward") + " - " + facilityJson.getString("council")), facilityJson.getString("ward_Code"), "Ward");
-                Location facilityLocation = ensureLocationExists(wardLoc, capitalizeWords(facilityJson.getString("Name") + " - " + hfrCode), facilityJson.getString("Fac_IDNumber"), "Facility");
-
-                // Process Children
-                if (facilityLocation.getParentLocation() != null) {
-                    try {
-                        getChildLocation(facilityLocation.getLocationId(), facilityLocation.getParentLocation().getLocationId(), facilityJson);
-                    } catch (Exception e) {
-                        LOGGER.log(Level.SEVERE, "Error processing children for " + facilityLocation.getName(), e);
-                    }
-                }
-
+                ensureLocationExists(wardLoc, capitalizeWords(facilityJson.getString("Name") + " - " + hfrCode), facilityJson.getString("Fac_IDNumber"), "Facility");
                 ensureLocationExists(wardLoc, capitalizeWords(facilityJson.getString("village") + " - " + facilityJson.getString("ward") + " - " + facilityJson.getString("council")), facilityJson.getString("Village_Code"), "Village");
             } catch (Exception e) {
                 LOGGER.severe("Error processing HFR Response " + e.getMessage());
-            }
-        }
-    }
-
-    /**
-     * Processes child locations to update names, attributes, and parent relationships.
-     */
-    private static void getChildLocation(String uuid, String parentLocationUuid, JSONObject hfrLocation) {
-        for (Location location : allLocations) {
-            if (location != null && location.getLocationId() != null &&
-                    location.getParentLocation() != null &&
-                    location.getParentLocation().getLocationId().equalsIgnoreCase(uuid)) {
-                LOGGER.info("Processing child location: " + location.getName());
-                if (location.getTags() != null && location.getTags().contains("Village")) {
-                    String expectedVillageName = hfrLocation.getString("village") + " - " + hfrLocation.getString("ward");
-                    if (!location.getName().equalsIgnoreCase(expectedVillageName)) {
-                        int response = updateLocationName(location, expectedVillageName);
-                        if (response == HttpURLConnection.HTTP_OK || response == HttpURLConnection.HTTP_CREATED) {
-                            updateOrCreateLocationAttribute(location, CODE_LOCATION_ATTRIBUTE_UUID, hfrLocation.getString("Village_Code"));
-                            updateChildLocationParent(location, parentLocationUuid);
-                        }
-                    }
-                }
             }
         }
     }
