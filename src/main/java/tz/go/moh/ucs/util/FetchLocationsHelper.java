@@ -66,12 +66,11 @@ public class FetchLocationsHelper extends OpenmrsService {
             LOGGER.info("Fetching locations from OpenMRS Starting index = " + startIndex);
             String response = fetchLocationResponse(startIndex);
             if (StringUtils.isNotBlank(response)) {
-                // Parse the locations from the response and add them to the list.
-                locationList = parseLocationsFromResponse(response, locationList);
-                // If there is a next page, recursively fetch and append the remaining locations.
+                List<Location> updatedLocationList = parseLocationsFromResponse(response, locationList);
                 if (hasNextPage(response)) {
-                    return getAllLocations(locationList, startIndex + 100);
+                    return getAllLocations(updatedLocationList, startIndex + 100);
                 }
+                return updatedLocationList;
             }
         } catch (Exception e) {
             LOGGER.severe("Exception occurred, retrying fetch for start index: " + e.getMessage());
@@ -80,7 +79,6 @@ public class FetchLocationsHelper extends OpenmrsService {
             } catch (InterruptedException ex) {
                 throw new RuntimeException(ex);
             }
-            // Retry fetching the locations after a delay.
             return getAllLocations(locationList, startIndex);
         }
         return locationList;
