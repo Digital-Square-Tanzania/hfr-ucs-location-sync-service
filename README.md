@@ -5,7 +5,7 @@ A Java-based application designed to synchronize health facility location data b
 ## Overview
 
 The UCS Location Synchronization Project performs several key functions:
-- **Data Synchronization:** Automatically fetches and updates location data from OpenMRS and HFR systems.
+
 - **Administrative Hierarchy Processing:** Retrieves and processes hierarchical data from HFR to maintain proper parent-child relationships between locations.
 - **CSV Import:** Imports hamlet location data from CSV files for fine-grained location management.
 - **Robust Error Handling:** Implements retry mechanisms and detailed logging to address network issues or data inconsistencies.
