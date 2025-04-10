@@ -14,10 +14,10 @@ public class CapitalizeUtil {
         }
 
         // Remove all double quotes from the input string.
-        input = input.replace("\"", "");
+        String sanitizedInput = input.replace("\"", "");
 
         // Split the string into words based on whitespace.
-        String[] words = input.split("\\s+");
+        String[] words = sanitizedInput.split("\\s+");
         StringBuilder formatted = new StringBuilder();
 
         for (int i = 0; i < words.length; i++) {
@@ -36,4 +36,3 @@ public class CapitalizeUtil {
         return formatted.toString().trim();
     }
 }
-

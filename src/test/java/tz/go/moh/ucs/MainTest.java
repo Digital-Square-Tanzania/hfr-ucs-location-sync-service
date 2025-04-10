@@ -133,6 +133,7 @@ class MainTest {
             HttpURLConnection dummyConnection = new HttpURLConnection(new URL("http://dummy-url")) {
                 @Override
                 public void disconnect() {
+                    //Not Required
                 }
 
                 @Override
@@ -142,6 +143,7 @@ class MainTest {
 
                 @Override
                 public void connect() {
+                    //Not Required
                 }
 
                 @Override

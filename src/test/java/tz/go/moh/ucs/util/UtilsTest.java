@@ -3,7 +3,6 @@ package tz.go.moh.ucs.util;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
-import org.mockito.Mockito;
 import tz.go.moh.ucs.Main;
 import tz.go.moh.ucs.domain.Location;
 import tz.go.moh.ucs.domain.LocationCSVRow;
@@ -39,7 +38,7 @@ class UtilsTest {
 
     @Test
     void testFindLocationByCodeWhenCodeExists() {
-        try (MockedStatic<Utils> mockedUtils = Mockito.mockStatic(Utils.class, CALLS_REAL_METHODS)) {
+        try (MockedStatic<Utils> mockedUtils = mockStatic(Utils.class, CALLS_REAL_METHODS)) {
             Location loc = new Location();
             loc.setName("Test Location");
 
@@ -53,7 +52,7 @@ class UtilsTest {
 
     @Test
     void testFindLocationByUuidWhenUuidExists() {
-        try (MockedStatic<Utils> mockedUtils = Mockito.mockStatic(Utils.class, CALLS_REAL_METHODS)) {
+        try (MockedStatic<Utils> mockedUtils = mockStatic(Utils.class, CALLS_REAL_METHODS)) {
             Location loc = new Location();
             loc.setLocationId("uuid-123");
 
@@ -71,8 +70,8 @@ class UtilsTest {
         when(mockExistingLocation.getParentLocation()).thenReturn(null);
         when(mockExistingLocation.getLocationId()).thenReturn("existing-uuid");
 
-        try (MockedStatic<Utils> mockedUtils = Mockito.mockStatic(Utils.class, CALLS_REAL_METHODS);
-             MockedStatic<OpenMrsCallsUtils> mockOpenMrs = Mockito.mockStatic(OpenMrsCallsUtils.class)) {
+        try (MockedStatic<Utils> mockedUtils = mockStatic(Utils.class, CALLS_REAL_METHODS);
+             MockedStatic<OpenMrsCallsUtils> mockOpenMrs = mockStatic(OpenMrsCallsUtils.class)) {
             mockedUtils.when(() -> Utils.findLocationByCode("CODE123")).thenReturn(mockExistingLocation);
 
             Location result = Utils.ensureLocationExists(mockParentLocation, "New Name", "CODE123", "Village");
@@ -87,9 +86,8 @@ class UtilsTest {
     @Test
     void testEnsureLocationExistsCreatesNewLocationWhenNotFound() throws Exception {
 
-        try (MockedStatic<Utils> mockUtils = Mockito.mockStatic(Utils.class, CALLS_REAL_METHODS);
-             MockedStatic<OpenMrsCallsUtils> mockOpenMrs = Mockito.mockStatic(OpenMrsCallsUtils.class);
-             MockedStatic<Main> mockMain = Mockito.mockStatic(Main.class)) {
+        try (MockedStatic<Utils> mockUtils = mockStatic(Utils.class, CALLS_REAL_METHODS);
+             MockedStatic<Main> mockMain = mockStatic(Main.class)) {
             // Simulate that no existing location is found
             mockUtils.when(() -> Utils.findLocationByCode("NEWCODE")).thenReturn(null);
 
@@ -138,8 +136,8 @@ class UtilsTest {
         row.setHamletCode("H123");
         rows.add(row);
 
-        try (MockedStatic<CSVReaderUtil> mockReader = Mockito.mockStatic(CSVReaderUtil.class);
-             MockedStatic<Utils> mockUtils = Mockito.mockStatic(Utils.class, CALLS_REAL_METHODS)) {
+        try (MockedStatic<CSVReaderUtil> mockReader = mockStatic(CSVReaderUtil.class);
+             MockedStatic<Utils> mockUtils = mockStatic(Utils.class, CALLS_REAL_METHODS)) {
 
             mockReader.when(() -> CSVReaderUtil.readCsvFromResources("test.csv")).thenReturn(rows);
 

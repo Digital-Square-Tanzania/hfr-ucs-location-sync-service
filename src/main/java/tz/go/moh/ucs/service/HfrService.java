@@ -24,10 +24,11 @@ public class HfrService {
     private static final String PASSWORD = config.getString("hfr.password");
 
     public static void fetchHealthFacilityData(int currentPage) throws Exception {
+        int page = currentPage;
         int totalPageCount;
         do {
-            System.out.println("Fetching health facility data... PAGE : " + currentPage);
-            String url = BASE_URL_GET_HEALTH_FACILITIES + currentPage;
+            System.out.println("Fetching health facility data... PAGE : " + page);
+            String url = BASE_URL_GET_HEALTH_FACILITIES + page;
             HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
             connection.setRequestMethod("GET");
             connection.setRequestProperty("Authorization", "Basic " + getBasicAuth());
@@ -50,28 +51,29 @@ public class HfrService {
                 // Get the metaData object
                 JSONObject metaDataObject = rootObject.getJSONObject("metaData");
                 totalPageCount = metaDataObject.getInt("pageCount");
-                currentPage = metaDataObject.getInt("currentPage");
+                page = metaDataObject.getInt("currentPage");
 
                 // Process the data
                 JSONArray dataArray = rootObject.getJSONArray("data");
                 processData(dataArray);
 
                 // Move to the next page
-                currentPage++;
+                page++;
             } else {
                 throw new Exception("Failed to fetch data. HTTP response code: " + responseCode);
             }
 
             connection.disconnect();
-        } while (currentPage <= totalPageCount);
+        } while (page <= totalPageCount);
     }
 
 
     public static void fetchAdminHierarchData(int currentPage) throws Exception {
+        int page = currentPage;
         int totalPageCount;
         do {
-            System.out.println("Fetching health facility data... PAGE : " + currentPage);
-            String url = BASE_URL_GET_HIERARCHY + currentPage;
+            System.out.println("Fetching health facility data... PAGE : " + page);
+            String url = BASE_URL_GET_HIERARCHY + page;
             HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
             connection.setRequestMethod("GET");
             connection.setRequestProperty("Authorization", "Basic " + getBasicAuth());
@@ -94,20 +96,20 @@ public class HfrService {
                 // Get the metaData object
                 JSONObject metaDataObject = rootObject.getJSONObject("metaData");
                 totalPageCount = metaDataObject.getInt("pageCount");
-                currentPage = metaDataObject.getInt("currentPage");
+                page = metaDataObject.getInt("currentPage");
 
                 // Process the data
                 JSONArray dataArray = rootObject.getJSONArray("data");
                 processAdminHierarchyData(dataArray);
 
                 // Move to the next page
-                currentPage++;
+                page++;
             } else {
                 throw new Exception("Failed to fetch data. HTTP response code: " + responseCode);
             }
 
             connection.disconnect();
-        } while (currentPage <= totalPageCount);
+        } while (page <= totalPageCount);
     }
 
     private static String getBasicAuth() {
