@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'com.github.johnrengelman.shadow' version '8.1.1'
     id 'application'
+    id 'jacoco'
 }
 
 group = 'tz.go.moh.ucs'
@@ -28,6 +29,15 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+
+jacocoTestReport {
+    dependsOn test // tests are required to run before generating the report
+
+    reports {
+        xml.required = true
+        html.required = true
+    }
 }
 
 application {
