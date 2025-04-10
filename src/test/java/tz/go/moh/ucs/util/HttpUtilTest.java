@@ -155,7 +155,7 @@ class HttpUtilTest {
     }
 
     @Test
-    void testPost_withoutAuth() {
+    void testPostWithoutAuth() {
         assertThrows(RuntimeException.class, () ->
             HttpUtil.post("http://invalid-url", null, "{\"key\":\"value\"}")
         );
