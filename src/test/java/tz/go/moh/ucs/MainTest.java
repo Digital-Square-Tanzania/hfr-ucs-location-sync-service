@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
 import tz.go.moh.ucs.domain.Location;
 import tz.go.moh.ucs.service.HfrService;
+import tz.go.moh.ucs.util.FetchLocationsHelper;
 import tz.go.moh.ucs.util.OpenMrsCallsUtils;
 
 import java.io.ByteArrayInputStream;
@@ -163,6 +164,7 @@ class MainTest {
             mockedOpenMrs.when(() -> OpenMrsCallsUtils.createConnection(anyString(), eq("POST")))
                     .thenReturn(dummyConnection);
 
+            FetchLocationsHelper fetchLocationsHelper = new FetchLocationsHelper();
             Location location = Main.createNewLocation(name, parentUuid, tags, attributes);
 
             assertNotNull(location);

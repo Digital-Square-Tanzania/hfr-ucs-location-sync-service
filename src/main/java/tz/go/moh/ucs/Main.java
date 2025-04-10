@@ -231,8 +231,10 @@ public class Main {
                         if (attributes != null && !attributes.isEmpty()) {
                             if (attributes.get(CODE_LOCATION_ATTRIBUTE_UUID) != null) {
                                 locAttributes.put("Code", attributes.get(CODE_LOCATION_ATTRIBUTE_UUID));
-                            } else {
+                            } else if (attributes.get(HFR_CODE_LOCATION_ATTRIBUTE_UUID) != null) {
                                 locAttributes.put("HFR Code", attributes.get(HFR_CODE_LOCATION_ATTRIBUTE_UUID));
+                            } else {
+                                locAttributes.putAll(attributes);
                             }
                         }
 
