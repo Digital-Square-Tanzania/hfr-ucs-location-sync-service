@@ -1,0 +1,4 @@
+region_code,region,council_code,council,ward_code,ward,street_code,street,village_code,Village,hamlet_code,hamlet
+001,Region1,101,Council1,201,Ward1,301,Street1,401,Village1,501,Hamlet1
+invalid,row,with,not,enough,columns
+002,Region2,102,Council2,202,Ward2,302,Street2,402,Village2,502,Hamlet2
