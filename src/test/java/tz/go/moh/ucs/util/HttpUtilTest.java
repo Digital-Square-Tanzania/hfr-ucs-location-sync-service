@@ -65,40 +65,40 @@ class HttpUtilTest {
     }
 
     @Test
-    void testMakeConnection_GET_NoAuth() throws URISyntaxException {
+    void testMakeConnectionGetNoAuth() throws URISyntaxException {
         HttpRequestBase request = HttpUtil.makeConnection("http://example.com/api", null, HttpMethod.GET, HttpUtil.AuthType.NONE, "");
         assertNotNull(request);
         assertTrue(request.getURI().toString().contains("http://example.com/api"));
     }
 
     @Test
-    void testMakeConnection_WithBasicAuth() throws URISyntaxException {
+    void testMakeConnectionWithBasicAuth() throws URISyntaxException {
         HttpRequestBase request = HttpUtil.makeConnection("http://example.com/api", "q=test", HttpMethod.GET, HttpUtil.AuthType.BASIC, "user:pass");
         assertNotNull(request.getFirstHeader("Authorization"));
         assertTrue(request.getFirstHeader("Authorization").getValue().startsWith("Basic"));
     }
 
     @Test
-    void testMakeConnection_WithTokenAuth() throws URISyntaxException {
+    void testMakeConnectionWithTokenAuth() throws URISyntaxException {
         HttpRequestBase request = HttpUtil.makeConnection("http://example.com/api", null, HttpMethod.GET, HttpUtil.AuthType.TOKEN, "sometoken");
         assertNotNull(request.getFirstHeader("Authorization"));
         assertTrue(request.getFirstHeader("Authorization").getValue().startsWith("Token"));
     }
 
     @Test
-    void testMakeConnection_POST() throws URISyntaxException {
+    void testMakeConnectionPOST() throws URISyntaxException {
         HttpRequestBase request = HttpUtil.makeConnection("http://example.com/api", null, HttpMethod.POST, HttpUtil.AuthType.NONE, "");
         assertEquals("POST", request.getMethod());
     }
 
     @Test
-    void testMakeConnection_PUT() throws URISyntaxException {
+    void testMakeConnectionPUT() throws URISyntaxException {
         HttpRequestBase request = HttpUtil.makeConnection("http://example.com/api", null, HttpMethod.PUT, HttpUtil.AuthType.NONE, "");
         assertEquals("PUT", request.getMethod());
     }
 
     @Test
-    void testMakeConnection_DELETE() throws URISyntaxException {
+    void testMakeConnectionDELETE() throws URISyntaxException {
         HttpRequestBase request = HttpUtil.makeConnection("http://example.com/api", null, HttpMethod.DELETE, HttpUtil.AuthType.NONE, "");
         assertEquals("DELETE", request.getMethod());
     }
@@ -115,7 +115,7 @@ class HttpUtilTest {
     }
 
     @Test
-    void testGetURL_withValidResponse_shouldReturnResponseBody() throws IOException {
+    void testGetURLWithValidResponseShouldReturnResponseBody() throws IOException {
         String expectedResponse = "{\"message\":\"success\"}";
         mockWebServer.enqueue(new MockResponse()
                 .setBody(expectedResponse)
@@ -129,7 +129,7 @@ class HttpUtilTest {
     }
 
     @Test
-    void testGetURL_withEmptyResponse_shouldReturnNull() throws IOException {
+    void testGetURLWithEmptyResponseShouldReturnNull() throws IOException{
         mockWebServer.enqueue(new MockResponse()
                 .setBody("")
                 .setResponseCode(200));
@@ -141,7 +141,7 @@ class HttpUtilTest {
     }
 
     @Test
-    void testGetURL_withErrorResponse_shouldReturnErrorBody() throws IOException {
+    void testGetURLWithErrorResponseShouldReturnErrorBody() throws IOException {
         String errorResponse = "{\"error\":\"something went wrong\"}";
         mockWebServer.enqueue(new MockResponse()
                 .setBody(errorResponse)
@@ -162,28 +162,28 @@ class HttpUtilTest {
     }
 
     @Test
-    void testPost_withBasicAuth() {
+    void testPostWithBasicAuth() {
         assertThrows(RuntimeException.class, () ->
             HttpUtil.post("http://invalid-url", null, "{\"key\":\"value\"}", "application/json", HttpUtil.AuthType.BASIC, "user:pass")
         );
     }
 
     @Test
-    void testGet_withoutAuth() {
+    void testGetWithoutAuth() {
         assertThrows(RuntimeException.class, () ->
             HttpUtil.get("http://invalid-url", null)
         );
     }
 
     @Test
-    void testGet_withToken() {
+    void testGetWithToken() {
         assertThrows(RuntimeException.class, () ->
             HttpUtil.getWithToken("http://invalid-url", null, "token")
         );
     }
 
     @Test
-    void testDelete_withTokenAuth() {
+    void testDeleteWithTokenAuth() {
         assertThrows(RuntimeException.class, () ->
             HttpUtil.delete("http://invalid-url", null, HttpUtil.AuthType.TOKEN, "token")
         );

@@ -28,7 +28,7 @@ class MainTest {
 
 
     @Test
-    void fetchHfrData_should_call_HfrService_static_method() {
+    void fetchHfrDataShouldCallHfrServiceStaticMethod() {
         try (MockedStatic<HfrService> mockedStatic = mockStatic(HfrService.class)) {
             // Stub the static method
             mockedStatic.when(() -> HfrService.fetchHealthFacilityData(1)).thenAnswer(invocation -> null);
@@ -42,7 +42,7 @@ class MainTest {
     }
 
     @Test
-    void fetchHfrAdminHierarchyData_should_call_static_method_once() {
+    void fetchHfrAdminHierarchyDataShouldCallStaticMethodOnce() {
         try (MockedStatic<HfrService> mockedStatic = mockStatic(HfrService.class)) {
             // Stub the static method
             mockedStatic.when(() -> HfrService.fetchAdminHierarchData(1)).thenAnswer(invocation -> null);
