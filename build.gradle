@@ -1,0 +1,42 @@
+plugins {
+    id 'java'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
+    id 'application'
+}
+
+group = 'tz.go.moh.ucs'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation group: 'org.json', name: 'json', version: '20240303'
+    implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.14.0'
+    implementation group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.14'
+    implementation group: 'commons-io', name: 'commons-io', version: '2.16.1'
+    implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: '4.12.0'
+    implementation 'com.typesafe:config:1.4.2'
+
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testImplementation 'org.mockito:mockito-core:5.5.0' // Added Mockito dependency
+    testImplementation 'org.mockito:mockito-junit-jupiter:5.5.0' // Added Mockito JUnit 5 integration
+}
+
+test {
+    useJUnitPlatform()
+}
+
+application {
+    mainClass = 'tz.go.moh.ucs.Main'
+}
+
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'tz.go.moh.ucs.Main'
+        )
+    }
+}
