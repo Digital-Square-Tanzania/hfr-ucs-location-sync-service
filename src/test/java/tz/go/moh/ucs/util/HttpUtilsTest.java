@@ -33,7 +33,7 @@ class HttpUtilsTest {
                 .setResponseCode(200));
 
         String baseUrl = mockWebServer.url("/test").toString();
-        String response = HttpUtils.getURL(baseUrl, "user", "pass");
+        String response = HttpUtil.getURL(baseUrl, "user", "pass");
 
         assertNotNull(response);
         assertEquals(expectedResponse, response);
@@ -46,7 +46,7 @@ class HttpUtilsTest {
                 .setResponseCode(200));
 
         String baseUrl = mockWebServer.url("/empty").toString();
-        String response = HttpUtils.getURL(baseUrl, "user", "pass");
+        String response = HttpUtil.getURL(baseUrl, "user", "pass");
 
         assertNull(response);
     }
@@ -59,7 +59,7 @@ class HttpUtilsTest {
                 .setResponseCode(500));
 
         String baseUrl = mockWebServer.url("/error").toString();
-        String response = HttpUtils.getURL(baseUrl, "user", "pass");
+        String response = HttpUtil.getURL(baseUrl, "user", "pass");
 
         assertNotNull(response);
         assertEquals(errorResponse, response);

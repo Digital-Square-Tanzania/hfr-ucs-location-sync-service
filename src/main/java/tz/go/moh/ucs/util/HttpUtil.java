@@ -1,5 +1,6 @@
 package tz.go.moh.ucs.util;
 
+import okhttp3.*;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpResponse;
@@ -12,8 +13,10 @@ import org.apache.http.protocol.HTTP;
 import tz.go.moh.ucs.domain.HttpMethod;
 
 import javax.net.ssl.SSLContext;
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.concurrent.TimeUnit;
 
 
 public class HttpUtil {
@@ -157,5 +160,27 @@ public class HttpUtil {
         BASIC,
         TOKEN,
         NONE
+    }
+
+    public static String getURL(String url, String username, String password) throws IOException {
+        Request request = new Request.Builder().url(url)
+                .addHeader("Authorization", Credentials.basic(username, password)).build();
+//        OkHttpClient client = new OkHttpClient();
+
+        OkHttpClient client = new OkHttpClient.Builder()
+//                .connectTimeout(10, TimeUnit.SECONDS)
+                .writeTimeout(30, TimeUnit.SECONDS)
+                .readTimeout(600, TimeUnit.SECONDS)
+                .build();
+
+        Call call = client.newCall(request);
+        Response response;
+        response = call.execute();
+        String responseBody = response.body().string();
+        if (!StringUtils.isBlank(responseBody)) {
+            return responseBody;
+        }
+        return null;
+
     }
 }

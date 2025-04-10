@@ -5,7 +5,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import tz.go.moh.ucs.domain.Location;
-import tz.go.moh.ucs.service.OpenmrsLocationService;
 import tz.go.moh.ucs.service.OpenmrsService;
 
 import java.util.ArrayList;
@@ -15,6 +14,8 @@ import static tz.go.moh.ucs.Main.LOGGER;
 
 
 public class FetchLocationsHelper extends OpenmrsService {
+    public static final String LOCATION_URL = "ws/rest/v1/location";
+
     public synchronized List<Location> getAllOpenMRSlocations() {
         List<Location> allLocationsList = new ArrayList<>();
         return getAllLocations(allLocationsList, 0);
@@ -23,9 +24,9 @@ public class FetchLocationsHelper extends OpenmrsService {
 
     public List<Location> getAllLocations(List<Location> locationList, int startIndex) throws JSONException {
         try {
-            LOGGER.info("Fetching locations from OpenMRS Starting index = "+startIndex);
-            String response = HttpUtils.getURL(
-                    HttpUtil.removeEndingSlash(OPENMRS_BASE_URL) + "/" + OpenmrsLocationService.LOCATION_URL
+            LOGGER.info("Fetching locations from OpenMRS Starting index = " + startIndex);
+            String response = HttpUtil.getURL(
+                    HttpUtil.removeEndingSlash(OPENMRS_BASE_URL) + "/" + LOCATION_URL
                             + "?v=custom:(uuid,display,name,attributes,tags:(uuid,display),parentLocation:(uuid,display))&limit=100&startIndex="
                             + startIndex, OPENMRS_USER, OPENMRS_PWD);
             if (StringUtils.isNotBlank(response)) {
