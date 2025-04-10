@@ -82,10 +82,6 @@ public class BaseEntity extends BaseDataObject {
         addresses.add(address);
     }
 
-    public Map<String, Object> getAttributes() {
-        return attributes;
-    }
-
     /**
      * WARNING: Overrides all existing attributes
      *
