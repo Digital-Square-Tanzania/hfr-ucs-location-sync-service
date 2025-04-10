@@ -6,6 +6,7 @@ import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import tz.go.moh.ucs.domain.Location;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -162,5 +163,68 @@ public class FetchLocationsHelperTest {
         assertEquals(2, locations.size());
         assertEquals("uuid1", locations.get(0).getLocationId());
         assertEquals("uuid2", locations.get(1).getLocationId());
+    }
+
+    // Test for parseLocationsFromResponse with valid results
+    @Test
+    public void testParseLocationsFromResponseWithResults() throws JSONException {
+        String jsonResponse = "{" +
+                "\"results\": [" +
+                "    {\"uuid\": \"test-uuid1\", \"name\": \"Location1\", \"tags\": []}," +
+                "    {\"uuid\": \"test-uuid2\", \"name\": \"Location2\", \"tags\": []}" +
+                "]}";
+
+        // Override makeLocation to create a Location with uuid and name from the JSON object
+        FetchLocationsHelper helper = new FetchLocationsHelper() {
+            @Override
+            public Location makeLocation(JSONObject json) throws JSONException {
+                return new Location(json.getString("uuid"), json.getString("name"), null, null, null, null, null);
+            }
+        };
+        List<Location> list = new ArrayList<>();
+        list = helper.parseLocationsFromResponse(jsonResponse, list);
+
+        assertEquals(2, list.size());
+        assertEquals("test-uuid1", list.get(0).getLocationId());
+        assertEquals("Location1", list.get(0).getName());
+        assertEquals("test-uuid2", list.get(1).getLocationId());
+        assertEquals("Location2", list.get(1).getName());
+    }
+
+    // Test for parseLocationsFromResponse with no results key
+    @Test
+    public void testParseLocationsFromResponseWithoutResults() throws JSONException {
+        String jsonResponse = "{}";
+        FetchLocationsHelper helper = new FetchLocationsHelper();
+        List<Location> list = new ArrayList<>();
+        list = helper.parseLocationsFromResponse(jsonResponse, list);
+
+        assertEquals(0, list.size());
+    }
+
+    // Test for hasNextPage when next link exists
+    @Test
+    public void testHasNextPageTrue() throws JSONException {
+        String jsonResponse = "{" +
+                "\"links\": [" +
+                "    {\"rel\": \"next\"}" +
+                "]}";
+        FetchLocationsHelper helper = new FetchLocationsHelper();
+        boolean result = helper.hasNextPage(jsonResponse);
+
+        assertTrue(result);
+    }
+
+    // Test for hasNextPage when next link does not exist
+    @Test
+    public void testHasNextPageFalse() throws JSONException {
+        String jsonResponse = "{" +
+                "\"links\": [" +
+                "    {\"rel\": \"prev\"}" +
+                "]}";
+        FetchLocationsHelper helper = new FetchLocationsHelper();
+        boolean result = helper.hasNextPage(jsonResponse);
+
+        assertFalse(result);
     }
 }

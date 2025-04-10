@@ -26,10 +26,6 @@ public class User extends BaseEntity {
 
     private String preferredName;
 
-    protected User() {
-
-    }
-
     public User(String baseEntityId) {
         super(baseEntityId);
     }

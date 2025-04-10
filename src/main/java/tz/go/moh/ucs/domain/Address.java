@@ -290,30 +290,12 @@ public class Address {
         return this;
     }
 
-    /**
-     * WARNING: Overrides all existing fields
-     *
-     * @param addressFields
-     * @return
-     */
-    public Address withAddressFields(Map<String, String> addressFields) {
-        this.addressFields = addressFields;
-        return this;
-    }
 
     public Address withAddressField(String field, String value) {
         if (addressFields == null) {
             addressFields = new HashMap<>();
         }
         addressFields.put(field, value);
-        return this;
-    }
-
-    public Address withAddressField(AddressField field, String value) {
-        if (addressFields == null) {
-            addressFields = new HashMap<>();
-        }
-        addressFields.put(field.name(), value);
         return this;
     }
 

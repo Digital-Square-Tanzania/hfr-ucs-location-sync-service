@@ -71,10 +71,6 @@ public class Location extends BaseDataObject {
         this.address = address;
     }
 
-    public Map<String, String> getIdentifiers() {
-        return identifiers;
-    }
-
     /**
      * WARNING: Overrides all existing identifiers
      *
@@ -184,17 +180,6 @@ public class Location extends BaseDataObject {
         return this;
     }
 
-    /**
-     * WARNING: Overrides all existing identifiers
-     *
-     * @param identifiers
-     * @return
-     */
-    public Location withIdentifiers(Map<String, String> identifiers) {
-        this.identifiers = identifiers;
-        return this;
-    }
-
     public Location withIdentifier(String identifierType, String identifier) {
         if (identifiers == null) {
             identifiers = new HashMap<>();
@@ -209,16 +194,6 @@ public class Location extends BaseDataObject {
         return this;
     }
 
-    /**
-     * WARNING: Overrides all existing tags
-     *
-     * @param tags
-     * @return
-     */
-    public Location withTags(Set<String> tags) {
-        this.tags = tags;
-        return this;
-    }
 
     public Location withTag(String tag) {
         if (tags == null) {
@@ -226,17 +201,6 @@ public class Location extends BaseDataObject {
         }
 
         tags.add(tag);
-        return this;
-    }
-
-    /**
-     * WARNING: Overrides all existing attributes
-     *
-     * @param attributes
-     * @return
-     */
-    public Location withAttributes(Map<String, String> attributes) {
-        this.attributes = attributes;
         return this;
     }
 

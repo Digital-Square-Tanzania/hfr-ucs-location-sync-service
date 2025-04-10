@@ -12,7 +12,6 @@ import java.util.List;
 
 import static tz.go.moh.ucs.Main.LOGGER;
 
-
 public class FetchLocationsHelper extends OpenmrsService {
     public static final String LOCATION_URL = "ws/rest/v1/location";
 
@@ -21,34 +20,68 @@ public class FetchLocationsHelper extends OpenmrsService {
         return getAllLocations(allLocationsList, 0);
     }
 
+    /**
+     * New helper to fetch the raw JSON response from OpenMRS for the given start index.
+     */
+    protected String fetchLocationResponse(int startIndex) throws Exception {
+        String url = HttpUtil.removeEndingSlash(OPENMRS_BASE_URL) + "/" + LOCATION_URL
+                + "?v=custom:(uuid,display,name,attributes,tags:(uuid,display),parentLocation:(uuid,display))"
+                + "&limit=100&startIndex=" + startIndex;
+        return HttpUtil.getURL(url, OPENMRS_USER, OPENMRS_PWD);
+    }
+
+    /**
+     * New helper to parse the response and accumulate locations into the provided list.
+     */
+    protected List<Location> parseLocationsFromResponse(String response, List<Location> locationList) throws JSONException {
+        JSONObject jsonObject = new JSONObject(response);
+        if (StringUtils.isNotBlank(response) && jsonObject.has(ConnectorConstants.RESULTS)) {
+            JSONArray results = jsonObject.getJSONArray(ConnectorConstants.RESULTS);
+            for (int i = 0; i < results.length(); i++) {
+                locationList.add(makeLocation(results.getJSONObject(i)));
+            }
+        }
+        return locationList;
+    }
+
+    /**
+     * New helper to check if the response indicates that there is a next page of results.
+     */
+    protected boolean hasNextPage(String response) throws JSONException {
+        JSONObject jsonObject = new JSONObject(response);
+        if (jsonObject.has("links")) {
+            JSONArray links = jsonObject.getJSONArray("links");
+            // Check if any link has the 'next' relation
+            for (int i = 0; i < links.length(); i++) {
+                if ("next".equalsIgnoreCase(links.getJSONObject(i).optString("rel"))) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
     public List<Location> getAllLocations(List<Location> locationList, int startIndex) throws JSONException {
         try {
             LOGGER.info("Fetching locations from OpenMRS Starting index = " + startIndex);
-            String response = HttpUtil.getURL(
-                    HttpUtil.removeEndingSlash(OPENMRS_BASE_URL) + "/" + LOCATION_URL
-                            + "?v=custom:(uuid,display,name,attributes,tags:(uuid,display),parentLocation:(uuid,display))&limit=100&startIndex="
-                            + startIndex, OPENMRS_USER, OPENMRS_PWD);
+            String response = fetchLocationResponse(startIndex);
             if (StringUtils.isNotBlank(response)) {
-                JSONObject jsonObject = new JSONObject(response);
-                JSONArray links = jsonObject.getJSONArray("links");
-
-                if (!StringUtils.isBlank(response) && jsonObject.has(ConnectorConstants.RESULTS)) {
-                    JSONArray results = new JSONObject(response).getJSONArray(ConnectorConstants.RESULTS);
-                    for (int i = 0; i < results.length(); i++) {
-                        locationList.add(makeLocation(results.getJSONObject(i)));
-                    }
-                    if (links.length() == 2 || links.getJSONObject(0).getString("rel").equals("next"))
-                        return getAllLocations(locationList, startIndex + 100);
+                // Parse the locations from the response and add them to the list.
+                locationList = parseLocationsFromResponse(response, locationList);
+                // If there is a next page, recursively fetch and append the remaining locations.
+                if (hasNextPage(response)) {
+                    return getAllLocations(locationList, startIndex + 100);
                 }
             }
         } catch (Exception e) {
+            LOGGER.severe("Exception occurred, retrying fetch for start index: " + e.getMessage());
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException ex) {
                 throw new RuntimeException(ex);
             }
-            getAllLocations(locationList, startIndex);
+            // Retry fetching the locations after a delay.
+            return getAllLocations(locationList, startIndex);
         }
         return locationList;
     }

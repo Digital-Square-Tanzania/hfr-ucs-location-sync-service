@@ -38,8 +38,7 @@ public class Main {
         HFR_CODE_LOCATION_ATTRIBUTE_UUID = config.getString("openmrs.hfr_code_location_attribute_uuid");
         HAMLET_RESOURCE_FILE_NAME = config.getString("hamlet.resource_file_name");
 
-        FetchLocationsHelper fetchLocationsHelper = new FetchLocationsHelper();
-        allLocations = fetchLocationsHelper.getAllOpenMRSlocations();
+        allLocations = new FetchLocationsHelper().getAllOpenMRSlocations();
 
         // Initialize caches
         for (Location loc : allLocations) {
@@ -55,12 +54,9 @@ public class Main {
         LOGGER.info("Fetched " + allLocations.size() + " locations.");
         fetchHfrData(1);
         fetchHfrAdminHierarchyData(1);
-
         importHamletLocationsFromCSV(HAMLET_RESOURCE_FILE_NAME);
 
-        LOGGER.info("=====================================================================================");
-        LOGGER.info("COMPLETED SYCHRONIZATION OF HFR LOCATIONS");
-        LOGGER.info("=====================================================================================");
+        LOGGER.info("COMPLETED SYNCHRONIZATION OF HFR LOCATIONS");
     }
 
     /**
@@ -111,7 +107,7 @@ public class Main {
             try {
                 Location countryLoc = ensureLocationExists(null, capitalizeWords(facilityJson.getString("country")), "TZ", "Country");
                 Location zoneLoc = ensureLocationExists(countryLoc, capitalizeWords(facilityJson.getString("zone")), facilityJson.getString("zone_code"), "Zone");
-                Location regionLoc = ensureLocationExists(zoneLoc, capitalizeWords(facilityJson.getString("region")), facilityJson.getString("region_code"), "Region");
+                ensureLocationExists(zoneLoc, capitalizeWords(facilityJson.getString("region")), facilityJson.getString("region_code"), "Region");
                 Location wardLoc = ensureLocationExists(null, capitalizeWords(facilityJson.getString("ward") + " - " + facilityJson.getString("council")), facilityJson.getString("ward_code"), "Ward");
                 ensureLocationExists(wardLoc, capitalizeWords(facilityJson.getString("village_mtaa") + " - " + facilityJson.getString("ward") + " - " + facilityJson.getString("council")), facilityJson.getString("village_mtaa_code"), "Village");
             } catch (Exception e) {

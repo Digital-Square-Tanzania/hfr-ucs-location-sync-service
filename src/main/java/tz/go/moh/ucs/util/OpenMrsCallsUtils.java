@@ -29,7 +29,6 @@ public class OpenMrsCallsUtils {
             if (location != null && location.getLocationId() != null &&
                     location.getParentLocation() != null &&
                     location.getParentLocation().getLocationId().equalsIgnoreCase(uuid)) {
-                LOGGER.info("Processing other location: " + location.getName());
                 if (location.getTags() != null && location.getTags().contains("Village") &&
                         location.getAttribute("Code") != null &&
                         location.getAttribute("Code").toString().equalsIgnoreCase(hfrLocation.getString("Village_Code"))) {
@@ -114,7 +113,6 @@ public class OpenMrsCallsUtils {
                     os.write(requestJson.toString().getBytes());
                 }
                 int responseCode = conn.getResponseCode();
-                LOGGER.info("Update Location Attribute Response Code: " + responseCode);
                 if (responseCode == HttpURLConnection.HTTP_OK) {
                     LOGGER.info("Location attribute updated successfully for " + locationUuid);
                     return;
