@@ -41,7 +41,7 @@ public class CSVReaderUtil {
 
                     // Split the CSV row into columns
                     String[] values = line.split(",");
-                    if (values.length < 12) {
+                    if (values.length < 9) {
                         // Optionally, log or handle invalid rows
                         continue;
                     }
@@ -54,12 +54,10 @@ public class CSVReaderUtil {
                     row.setCouncil(values[3].trim());
                     row.setWardCode(values[4].trim());
                     row.setWard(values[5].trim());
-                    row.setStreetCode(values[6].trim());
-                    row.setStreet(values[7].trim());
-                    row.setVillageCode(values[8].trim());
-                    row.setVillage(values[9].trim());
-                    row.setHamletCode(values[10].trim());
-                    row.setHamlet(values[11].trim());
+                    row.setVillageCode(values[6].trim());
+                    row.setVillage(values[7].trim());
+                    row.setHamletCode(values[8].trim());
+                    row.setHamlet(values[9].trim());
 
                     locations.add(row);
                 }

@@ -26,7 +26,7 @@ public class FetchLocationsHelper extends OpenmrsService {
     protected String fetchLocationResponse(int startIndex) throws Exception {
         String url = HttpUtil.removeEndingSlash(OPENMRS_BASE_URL) + "/" + LOCATION_URL
                 + "?v=custom:(uuid,display,name,attributes,tags:(uuid,display),parentLocation:(uuid,display))"
-                + "&limit=100&startIndex=" + startIndex;
+                + "&limit=10000&startIndex=" + startIndex;
         return HttpUtil.getURL(url, OPENMRS_USER, OPENMRS_PWD);
     }
 
@@ -68,7 +68,7 @@ public class FetchLocationsHelper extends OpenmrsService {
             if (StringUtils.isNotBlank(response)) {
                 List<Location> updatedLocationList = parseLocationsFromResponse(response, locationList);
                 if (hasNextPage(response)) {
-                    return getAllLocations(updatedLocationList, startIndex + 100);
+                    return getAllLocations(updatedLocationList, startIndex + 10000);
                 }
                 return updatedLocationList;
             }
