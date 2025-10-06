@@ -31,6 +31,8 @@ public class Main {
     public static String HFR_CODE_LOCATION_ATTRIBUTE_UUID;
     public static List<Location> allLocations = new ArrayList<>();
     public static String HAMLET_RESOURCE_FILE_NAME;
+    private static final ThreadLocal<Boolean> HAMLET_IMPORT_CONTEXT = ThreadLocal.withInitial(() -> Boolean.FALSE);
+    private static final ThreadLocal<String> HAMLET_IMPORT_RESOURCE = new ThreadLocal<>();
 
     public static void main(String[] args) {
         Config config = ConfigFactory.load();
@@ -52,8 +54,8 @@ public class Main {
             }
         }
         LOGGER.info("Fetched " + allLocations.size() + " locations.");
-        fetchHfrData(1);
-        fetchHfrAdminHierarchyData(1);
+//        fetchHfrData(1);
+//        fetchHfrAdminHierarchyData(1);
         importHamletLocationsFromCSV(HAMLET_RESOURCE_FILE_NAME);
 
         LOGGER.info("COMPLETED SYNCHRONIZATION OF HFR LOCATIONS");
@@ -152,7 +154,7 @@ public class Main {
 
                 JSONObject json = new JSONObject();
                 json.put("name", name);
-                json.put("description", "Created via integration");
+                json.put("description", resolveCreationDescription(tags));
                 if (parentUuid != null) {
                     json.put("parentLocation", parentUuid);
                 }
@@ -217,5 +219,41 @@ public class Main {
             }
         }
         return null;
+    }
+
+    public static void setHamletImportContext(boolean active) {
+        HAMLET_IMPORT_CONTEXT.set(active);
+    }
+
+    public static void clearHamletImportContext() {
+        HAMLET_IMPORT_CONTEXT.remove();
+    }
+
+    public static boolean isHamletImportContext() {
+        Boolean flag = HAMLET_IMPORT_CONTEXT.get();
+        return flag != null && flag;
+    }
+
+    public static void setHamletImportResource(String resourceName) {
+        HAMLET_IMPORT_RESOURCE.set(resourceName);
+    }
+
+    public static String getHamletImportResource() {
+        return HAMLET_IMPORT_RESOURCE.get();
+    }
+
+    public static void clearHamletImportResource() {
+        HAMLET_IMPORT_RESOURCE.remove();
+    }
+
+    private static String resolveCreationDescription(Set<String> tags) {
+        if (isHamletImportContext() && tags != null) {
+            for (String tag : tags) {
+                if ("Hamlet".equalsIgnoreCase(tag) || "Village".equalsIgnoreCase(tag)) {
+                    return "Created via integration from Update ICCHW villages";
+                }
+            }
+        }
+        return "Created via integration";
     }
 }
