@@ -1,1 +1,202 @@
-[]
+[
+  {
+    "parentName": "Musenyi Village - Bisibo Ward - Biharamulo District Council",
+    "code": "TZ.LK.KR.BI.4.4.3.4",
+    "name": "Marumba Hamlet - Musenyi Village - Bisibo Ward",
+    "tag": "Hamlet",
+    "source": "hamlets_list.csv",
+    "uuid": "2d2fcf90-4fa5-4b3b-b255-1ea3a1d40324",
+    "parentUuid": "125d67bb-4500-4fe7-a105-9c9e6bf29bb1",
+    "timestamp": "2025-10-07T04:53:42.720371Z"
+  },
+  {
+    "parentName": "Kisuno Village - Bisibo Ward - Biharamulo District Council",
+    "code": "TZ.LK.KR.BI.4.4.4.4",
+    "name": "Nyakahama Hamlet - Kisuno Village - Bisibo Ward",
+    "tag": "Hamlet",
+    "source": "hamlets_list.csv",
+    "uuid": "b408eaa0-c271-4500-84d0-40fcb7c7086e",
+    "parentUuid": "b65b2800-9fbc-4846-b7c3-73f9b31ccae1",
+    "timestamp": "2025-10-07T04:53:43.682263Z"
+  },
+  {
+    "parentName": "Ntumagu Village - Nyanza Ward - Biharamulo District Council",
+    "code": "TZ.LK.KR.BI.4.17.3.5",
+    "name": "Rongwe Hamlet - Ntumagu Village - Nyanza Ward",
+    "tag": "Hamlet",
+    "source": "hamlets_list.csv",
+    "uuid": "56eddb07-d11b-4716-a610-c3377072539c",
+    "parentUuid": "5d72e730-5378-4b9b-984b-2cf2392df165",
+    "timestamp": "2025-10-07T04:53:47.315547Z"
+  },
+  {
+    "parentName": "Ruganzu Village - Nyanza Ward - Biharamulo District Council",
+    "code": "TZ.LK.KR.BI.4.17.4.5",
+    "name": "Rongwe Hamlet - Ruganzu Village - Nyanza Ward",
+    "tag": "Hamlet",
+    "source": "hamlets_list.csv",
+    "uuid": "6bbff493-b579-4147-a7c5-3f0e044a6a3d",
+    "parentUuid": "717d421a-5a99-47dd-a086-920ed5b427f3",
+    "timestamp": "2025-10-07T04:53:47.857939Z"
+  },
+  {
+    "parentName": "Katahoka Village - Katahoka Ward - Biharamulo District Council",
+    "code": "TZ.LK.KR.BI.4.16.1.4",
+    "name": "Kasese Hamlet - Katahoka Village - Katahoka Ward",
+    "tag": "Hamlet",
+    "source": "hamlets_list.csv",
+    "uuid": "b6241292-a854-41c9-bc45-1771ae9af12e",
+    "parentUuid": "6f40397f-dd7b-4ac6-8de6-60521d540864",
+    "timestamp": "2025-10-07T04:53:49.210357Z"
+  },
+  {
+    "parentName": "Katahoka Village - Katahoka Ward - Biharamulo District Council",
+    "code": "TZ.LK.KR.BI.4.16.1.3",
+    "name": "Bugege Hamlet - Katahoka Village - Katahoka Ward",
+    "tag": "Hamlet",
+    "source": "hamlets_list.csv",
+    "uuid": "d012a155-1dab-4894-a1df-e99e403ef6c5",
+    "parentUuid": "6f40397f-dd7b-4ac6-8de6-60521d540864",
+    "timestamp": "2025-10-07T04:53:49.282661Z"
+  },
+  {
+    "parentName": "Katahoka Village - Katahoka Ward - Biharamulo District Council",
+    "code": "TZ.LK.KR.BI.4.16.1.6",
+    "name": "Majengo Hamlet - Katahoka Village - Katahoka Ward",
+    "tag": "Hamlet",
+    "source": "hamlets_list.csv",
+    "uuid": "3965314f-9e1f-4b22-81c9-ce94d7596e0e",
+    "parentUuid": "6f40397f-dd7b-4ac6-8de6-60521d540864",
+    "timestamp": "2025-10-07T04:53:49.429980Z"
+  },
+  {
+    "parentName": "Katahoka Village - Katahoka Ward - Biharamulo District Council",
+    "code": "TZ.LK.KR.BI.4.16.1.7",
+    "name": "Mtakuja Hamlet - Katahoka Village - Katahoka Ward",
+    "tag": "Hamlet",
+    "source": "hamlets_list.csv",
+    "uuid": "60f38151-5207-48d6-bb37-750e0719c7db",
+    "parentUuid": "6f40397f-dd7b-4ac6-8de6-60521d540864",
+    "timestamp": "2025-10-07T04:53:49.532183Z"
+  },
+  {
+    "parentName": "Katahoka Village - Katahoka Ward - Biharamulo District Council",
+    "code": "TZ.LK.KR.BI.4.16.1.5",
+    "name": "Katahoka Hamlet - Katahoka Village - Katahoka Ward",
+    "tag": "Hamlet",
+    "source": "hamlets_list.csv",
+    "uuid": "20d2588e-cfe0-487d-8018-24d3f00557f1",
+    "parentUuid": "6f40397f-dd7b-4ac6-8de6-60521d540864",
+    "timestamp": "2025-10-07T04:53:49.598360Z"
+  },
+  {
+    "parentName": "Katahoka Village - Katahoka Ward - Biharamulo District Council",
+    "code": "TZ.LK.KR.BI.4.16.1.8",
+    "name": "Nyamahuna Hamlet - Katahoka Village - Katahoka Ward",
+    "tag": "Hamlet",
+    "source": "hamlets_list.csv",
+    "uuid": "323effe9-5267-4dbf-8258-4eb7dc03a649",
+    "parentUuid": "6f40397f-dd7b-4ac6-8de6-60521d540864",
+    "timestamp": "2025-10-07T04:53:49.775727Z"
+  },
+  {
+    "parentName": "Kaperanono Village - Nyabusozi Ward - Biharamulo District Council",
+    "code": "TZ.LK.KR.BI.4.10.3.4",
+    "name": "Nyakaziba Hamlet - Kaperanono Village - Nyabusozi Ward",
+    "tag": "Hamlet",
+    "source": "hamlets_list.csv",
+    "uuid": "de7e40cb-27d7-4b87-8268-0b6c4fb62fb7",
+    "parentUuid": "401cab7b-e677-4457-b1b6-e2645c15e736",
+    "timestamp": "2025-10-07T04:53:51.872354Z"
+  },
+  {
+    "parentName": "Nyabusozi Village - Nyabusozi Ward - Biharamulo District Council",
+    "code": "TZ.LK.KR.BI.4.10.4.9",
+    "name": "Kabingo Hamlet - Nyabusozi Village - Nyabusozi Ward",
+    "tag": "Hamlet",
+    "source": "hamlets_list.csv",
+    "uuid": "95994423-0f8f-4421-9baa-07e577567f7c",
+    "parentUuid": "80a49148-f195-4e05-bdc8-fc1ad6e81bf3",
+    "timestamp": "2025-10-07T04:53:52.267861Z"
+  },
+  {
+    "parentName": "Nyabusozi Village - Nyabusozi Ward - Biharamulo District Council",
+    "code": "TZ.LK.KR.BI.4.10.4.11",
+    "name": "Katundu Hamlet - Nyabusozi Village - Nyabusozi Ward",
+    "tag": "Hamlet",
+    "source": "hamlets_list.csv",
+    "uuid": "990fb4f1-181b-4e35-bf8c-feef9ca14224",
+    "parentUuid": "80a49148-f195-4e05-bdc8-fc1ad6e81bf3",
+    "timestamp": "2025-10-07T04:53:52.513246Z"
+  },
+  {
+    "parentName": "Nyabusozi Village - Nyabusozi Ward - Biharamulo District Council",
+    "code": "TZ.LK.KR.BI.4.10.4.10",
+    "name": "Karundi B Hamlet - Nyabusozi Village - Nyabusozi Ward",
+    "tag": "Hamlet",
+    "source": "hamlets_list.csv",
+    "uuid": "4210c623-86db-457f-ad96-010aab810641",
+    "parentUuid": "80a49148-f195-4e05-bdc8-fc1ad6e81bf3",
+    "timestamp": "2025-10-07T04:53:52.961485Z"
+  },
+  {
+    "parentName": "Kisenga Village - Nemba Ward - Biharamulo District Council",
+    "code": "TZ.LK.KR.BI.4.11.3.4",
+    "name": "Mwabalimi Hamlet - Kisenga Village - Nemba Ward",
+    "tag": "Hamlet",
+    "source": "hamlets_list.csv",
+    "uuid": "6e3849ca-c39e-46f2-9ccb-b5ed0ae49321",
+    "parentUuid": "4f021530-4112-48fc-a6ca-4e62aaf7e3a7",
+    "timestamp": "2025-10-07T04:53:53.784783Z"
+  },
+  {
+    "parentName": "Kisenga Village - Nemba Ward - Biharamulo District Council",
+    "code": "TZ.LK.KR.BI.4.11.3.3",
+    "name": "Kazilambwa Hamlet - Kisenga Village - Nemba Ward",
+    "tag": "Hamlet",
+    "source": "hamlets_list.csv",
+    "uuid": "7400d665-615d-43b6-a648-bf9ce4ec027b",
+    "parentUuid": "4f021530-4112-48fc-a6ca-4e62aaf7e3a7",
+    "timestamp": "2025-10-07T04:53:53.942510Z"
+  },
+  {
+    "parentName": "Kisenga Village - Nemba Ward - Biharamulo District Council",
+    "code": "TZ.LK.KR.BI.4.11.3.5",
+    "name": "Shilabela Hamlet - Kisenga Village - Nemba Ward",
+    "tag": "Hamlet",
+    "source": "hamlets_list.csv",
+    "uuid": "840ebd0e-567a-4a83-971f-3f959847634c",
+    "parentUuid": "4f021530-4112-48fc-a6ca-4e62aaf7e3a7",
+    "timestamp": "2025-10-07T04:53:54.008773Z"
+  },
+  {
+    "parentName": "Kaluguyu Village - Nemba Ward - Biharamulo District Council",
+    "code": "TZ.LK.KR.BI.4.11.2.5",
+    "name": "Busambilo Hamlet - Kaluguyu Village - Nemba Ward",
+    "tag": "Hamlet",
+    "source": "hamlets_list.csv",
+    "uuid": "6e3a565a-2d9b-49c3-afa8-370319a43994",
+    "parentUuid": "d5bd8eee-8661-4f43-9329-70ce4612e0c0",
+    "timestamp": "2025-10-07T04:53:54.582453Z"
+  },
+  {
+    "parentName": "Nemba Village - Nemba Ward - Biharamulo District Council",
+    "code": "TZ.LK.KR.BI.4.11.1.7",
+    "name": "Nemba Centre Hamlet - Nemba Village - Nemba Ward",
+    "tag": "Hamlet",
+    "source": "hamlets_list.csv",
+    "uuid": "7cd2977e-8601-4e2d-a325-eeec6cf62a82",
+    "parentUuid": "500c625e-0de9-4bd0-b6e0-127b69ee8763",
+    "timestamp": "2025-10-07T04:53:55.154419Z"
+  },
+  {
+    "parentName": "Nyabugombe Village - Nyakahura Ward - Biharamulo District Council",
+    "code": "TZ.LK.KR.BI.4.1.1.3",
+    "name": "Kibamba Hamlet - Nyabugombe Village - Nyakahura Ward",
+    "tag": "Hamlet",
+    "source": "hamlets_list.csv",
+    "uuid": "1f3d03d9-98c5-4a73-beef-dfbd3ade6345",
+    "parentUuid": "f47682b0-3a8c-4bcb-80a8-402fb455cd2d",
+    "timestamp": "2025-10-07T04:53:55.517553Z"
+  }
+]
