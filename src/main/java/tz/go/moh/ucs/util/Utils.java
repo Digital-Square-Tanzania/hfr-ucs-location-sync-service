@@ -36,6 +36,7 @@ public class Utils {
     private static final Path HAMLET_CODE_FAILED_LOG_PATH = Paths.get("src", "main", "resources", "hamlets_updates_failed.csv");
     private static final Path HAMLET_CODE_MISSING_LOG_PATH = Paths.get("src", "main", "resources", "hamlets_updates_missing.csv");
     private static final Path HAMLET_CODE_DUPLICATE_LOG_PATH = Paths.get("src", "main", "resources", "hamlets_updates_duplicates.csv");
+    private static final Path RECEIVED_LOCATIONS_LOG_PATH = Paths.get("src", "main", "resources", "received_locations.json");
     private static final Set<String> PRIORITY_WARD_CODES = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
             "TZ.WT.KM.BW.6.16",
             "TZ.WT.KM.BW.6.17",
@@ -622,6 +623,14 @@ public class Utils {
         return "\"" + escaped + "\"";
     }
 
+    public static void storeReceivedAdminHierarchy(JSONObject facilityJson) {
+        if (facilityJson == null) {
+            return;
+        }
+        JSONObject entry = new JSONObject(facilityJson.toString());
+        appendReceivedLocationsLog(RECEIVED_LOCATIONS_LOG_PATH, entry);
+    }
+
     private static synchronized void appendHamletCsv(Path path, String header, String line, String logLabel) {
         try {
             Files.createDirectories(path.getParent());
@@ -634,6 +643,29 @@ public class Utils {
                     StandardOpenOption.CREATE, StandardOpenOption.APPEND);
         } catch (IOException e) {
             LOGGER.log(Level.SEVERE, "Failed to write " + logLabel + " log", e);
+        }
+    }
+
+    private static synchronized void appendReceivedLocationsLog(Path path, JSONObject entry) {
+        try {
+            JSONArray existingEntries = new JSONArray();
+            if (Files.exists(path)) {
+                String content = Files.readString(path, StandardCharsets.UTF_8).trim();
+                if (!content.isEmpty()) {
+                    try {
+                        existingEntries = new JSONArray(content);
+                    } catch (Exception parseException) {
+                        LOGGER.log(Level.WARNING, "Existing received locations log is invalid. Resetting log file.", parseException);
+                        existingEntries = new JSONArray();
+                    }
+                }
+            }
+
+            existingEntries.put(entry);
+            Files.createDirectories(path.getParent());
+            Files.writeString(path, existingEntries.toString(2), StandardCharsets.UTF_8, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+        } catch (IOException e) {
+            LOGGER.log(Level.SEVERE, "Failed to write received locations log", e);
         }
     }
 }

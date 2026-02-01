@@ -187,6 +187,7 @@ public class Main {
             if (!isSelectedCouncil(councilName)) {
                 continue;
             }
+            storeReceivedAdminHierarchy(facilityJson);
             try {
                 Location countryLoc = ensureLocationExists(null, capitalizeWords(facilityJson.getString("country")), "TZ", "Country");
                 Location zoneLoc = ensureLocationExists(countryLoc, capitalizeWords(facilityJson.getString("zone")), facilityJson.getString("zone_code"), "Zone");
