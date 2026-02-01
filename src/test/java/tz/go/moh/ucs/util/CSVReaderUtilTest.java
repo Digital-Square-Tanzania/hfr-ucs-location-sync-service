@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
+import tz.go.moh.ucs.domain.HfrCodeCorrectionRow;
 import tz.go.moh.ucs.domain.LocationCSVRow;
 
 public class CSVReaderUtilTest {
@@ -106,5 +107,19 @@ public class CSVReaderUtilTest {
         assertEquals("Village1", row.getVillage());
         assertEquals("501", row.getHamletCode());
         assertEquals("Hamlet1", row.getHamlet());
+    }
+
+    @Test
+    public void testReadHfrCodeCorrectionsFromTsv() throws IOException {
+        List<HfrCodeCorrectionRow> rows = CSVReaderUtil.readHfrCodeCorrectionsFromResources("hfr_corrections.tsv");
+        assertNotNull(rows, "The returned list should not be null");
+        assertEquals(1, rows.size(), "There should be exactly 1 row");
+
+        HfrCodeCorrectionRow row = rows.get(0);
+        assertEquals("Test Ward", row.getLocationName());
+        assertEquals("WARD", row.getLocationType());
+        assertEquals("TZ.TEST.1", row.getIncorrectHfrCode());
+        assertEquals("TZ.TEST.2", row.getCorrectHfrCode());
+        assertEquals("ABC123", row.getUid());
     }
 }

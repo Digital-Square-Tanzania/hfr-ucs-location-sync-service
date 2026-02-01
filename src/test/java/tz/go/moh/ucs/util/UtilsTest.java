@@ -1,14 +1,23 @@
 package tz.go.moh.ucs.util;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
 import tz.go.moh.ucs.Main;
+import tz.go.moh.ucs.domain.HfrCodeCorrectionRow;
 import tz.go.moh.ucs.domain.Location;
 import tz.go.moh.ucs.domain.LocationCSVRow;
 
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -24,6 +33,10 @@ class UtilsTest {
     void setUp() {
         Main.CODE_LOCATION_ATTRIBUTE_UUID = "mock-code-uuid";
         Main.HFR_CODE_LOCATION_ATTRIBUTE_UUID = "mock-hfr-code-uuid";
+        Main.codeCache.clear();
+        Main.locationCache.clear();
+        Main.allLocations = new ArrayList<>();
+        deleteLogFiles();
 
         mockParentLocation = mock(Location.class);
         when(mockParentLocation.getLocationId()).thenReturn("parent-uuid");
@@ -151,5 +164,255 @@ class UtilsTest {
 
             mockReader.verify(() -> CSVReaderUtil.readCsvFromResources("test.csv"), times(1));
         }
+    }
+
+    @Test
+    void testApplyHamletCodeCorrectionsUpdatesCodeAndLogsSuccess() throws IOException {
+        HfrCodeCorrectionRow row = new HfrCodeCorrectionRow();
+        row.setIncorrectHfrCode("OLD.CODE");
+        row.setCorrectHfrCode("NEWCODE");
+        row.setLocationName("Test Location");
+        row.setLocationType("Village");
+
+        Location location = new Location();
+        location.setLocationId("loc-uuid");
+        location.setName("Test Location");
+        location.setTags(new HashSet<>());
+        location.getTags().add("Village");
+        Map<String, String> attributes = new HashMap<>();
+        attributes.put("Code", "OLD.CODE");
+        location.setAttributes(attributes);
+        Main.codeCache.put("old.code", location);
+
+        try (MockedStatic<CSVReaderUtil> mockReader = mockStatic(CSVReaderUtil.class);
+             MockedStatic<OpenMrsCallsUtils> mockOpenMrs = mockStatic(OpenMrsCallsUtils.class)) {
+            mockReader.when(() -> CSVReaderUtil.readHfrCodeCorrectionsFromResources("test.csv"))
+                    .thenReturn(List.of(row));
+            mockOpenMrs.when(() -> OpenMrsCallsUtils.getLocationAttributeUuid(anyString(), anyString()))
+                    .thenReturn("attr-uuid");
+            mockOpenMrs.when(() -> OpenMrsCallsUtils.updateLocationAttribute(anyString(), anyString(), anyString(), anyString()))
+                    .thenAnswer(invocation -> null);
+
+            Utils.applyHamletCodeCorrectionsFromCSV("test.csv");
+
+            assertEquals("NEWCODE", location.getAttributes().get("Code"));
+            assertNull(Main.codeCache.get("old.code"));
+            assertEquals(location, Main.codeCache.get("newcode"));
+        }
+
+        JSONArray logEntries = readLogArray("src/main/resources/hamlets_updates_success.json");
+        assertEquals(1, logEntries.length());
+        JSONObject entry = logEntries.getJSONObject(0);
+        assertEquals("OLD.CODE", entry.getString("incorrectCode"));
+        assertEquals("NEWCODE", entry.getString("correctCode"));
+    }
+
+    @Test
+    void testApplyHamletCodeCorrectionsSetsParentFromCorrectCode() {
+        HfrCodeCorrectionRow row = new HfrCodeCorrectionRow();
+        row.setIncorrectHfrCode("TZ.WRONG.1");
+        row.setCorrectHfrCode("TZ.PARENT.1");
+
+        Location parent = new Location();
+        parent.setLocationId("parent-uuid");
+        parent.setName("Parent");
+        parent.setTags(new HashSet<>());
+        parent.getTags().add("Ward");
+        Map<String, String> parentAttributes = new HashMap<>();
+        parentAttributes.put("Code", "TZ.PARENT");
+        parent.setAttributes(parentAttributes);
+
+        Location child = new Location();
+        child.setLocationId("child-uuid");
+        child.setName("Child");
+        child.setTags(new HashSet<>());
+        child.getTags().add("Village");
+        Map<String, String> childAttributes = new HashMap<>();
+        childAttributes.put("Code", "TZ.WRONG.1");
+        child.setAttributes(childAttributes);
+
+        Main.codeCache.put("tz.parent", parent);
+        Main.codeCache.put("tz.wrong.1", child);
+
+        try (MockedStatic<CSVReaderUtil> mockReader = mockStatic(CSVReaderUtil.class);
+             MockedStatic<OpenMrsCallsUtils> mockOpenMrs = mockStatic(OpenMrsCallsUtils.class)) {
+            mockReader.when(() -> CSVReaderUtil.readHfrCodeCorrectionsFromResources("test.csv"))
+                    .thenReturn(List.of(row));
+            mockOpenMrs.when(() -> OpenMrsCallsUtils.getLocationAttributeUuid(anyString(), anyString()))
+                    .thenReturn("attr-uuid");
+            mockOpenMrs.when(() -> OpenMrsCallsUtils.updateLocationAttribute(anyString(), anyString(), anyString(), anyString()))
+                    .thenAnswer(invocation -> null);
+            mockOpenMrs.when(() -> OpenMrsCallsUtils.updateChildLocationParent(child, "parent-uuid"))
+                    .thenAnswer(invocation -> null);
+
+            Utils.applyHamletCodeCorrectionsFromCSV("test.csv");
+
+            mockOpenMrs.verify(() -> OpenMrsCallsUtils.updateChildLocationParent(child, "parent-uuid"));
+            assertEquals(parent, child.getParentLocation());
+        }
+    }
+
+    @Test
+    void testApplyHamletCodeCorrectionsMissingLocationLogsMissing() throws IOException {
+        HfrCodeCorrectionRow row = new HfrCodeCorrectionRow();
+        row.setIncorrectHfrCode("MISSING.CODE");
+        row.setCorrectHfrCode("NEW.CODE");
+
+        try (MockedStatic<CSVReaderUtil> mockReader = mockStatic(CSVReaderUtil.class)) {
+            mockReader.when(() -> CSVReaderUtil.readHfrCodeCorrectionsFromResources("test.csv"))
+                    .thenReturn(List.of(row));
+
+            Utils.applyHamletCodeCorrectionsFromCSV("test.csv");
+        }
+
+        JSONArray logEntries = readLogArray("src/main/resources/hamlets_updates_missing.json");
+        assertEquals(1, logEntries.length());
+        assertEquals("MISSING.CODE", logEntries.getJSONObject(0).getString("incorrectCode"));
+    }
+
+    @Test
+    void testApplyHamletCodeCorrectionsMissingParentDoesNotUpdateParent() throws IOException {
+        HfrCodeCorrectionRow row = new HfrCodeCorrectionRow();
+        row.setIncorrectHfrCode("TZ.OLD.1");
+        row.setCorrectHfrCode("TZ.NEW.1");
+
+        Location child = new Location();
+        child.setLocationId("child-uuid");
+        child.setName("Child");
+        child.setTags(new HashSet<>());
+        child.getTags().add("Village");
+        Map<String, String> childAttributes = new HashMap<>();
+        childAttributes.put("Code", "TZ.OLD.1");
+        child.setAttributes(childAttributes);
+
+        Main.codeCache.put("tz.old.1", child);
+
+        try (MockedStatic<CSVReaderUtil> mockReader = mockStatic(CSVReaderUtil.class);
+             MockedStatic<OpenMrsCallsUtils> mockOpenMrs = mockStatic(OpenMrsCallsUtils.class)) {
+            mockReader.when(() -> CSVReaderUtil.readHfrCodeCorrectionsFromResources("test.csv"))
+                    .thenReturn(List.of(row));
+            mockOpenMrs.when(() -> OpenMrsCallsUtils.getLocationAttributeUuid(anyString(), anyString()))
+                    .thenReturn("attr-uuid");
+            mockOpenMrs.when(() -> OpenMrsCallsUtils.updateLocationAttribute(anyString(), anyString(), anyString(), anyString()))
+                    .thenAnswer(invocation -> null);
+
+            Utils.applyHamletCodeCorrectionsFromCSV("test.csv");
+
+            mockOpenMrs.verify(() -> OpenMrsCallsUtils.updateChildLocationParent(any(), anyString()), never());
+            assertNull(child.getParentLocation());
+        }
+
+        JSONArray logEntries = readLogArray("src/main/resources/hamlets_updates_success.json");
+        assertEquals(1, logEntries.length());
+        assertTrue(logEntries.getJSONObject(0).getString("message").contains("Parent location not found"));
+    }
+
+    @Test
+    void testApplyHamletCodeCorrectionsLogsFailureOnException() throws IOException {
+        HfrCodeCorrectionRow row = new HfrCodeCorrectionRow();
+        row.setIncorrectHfrCode("OLD.CODE");
+        row.setCorrectHfrCode("NEW.CODE");
+
+        Location location = new Location();
+        location.setLocationId("loc-uuid");
+        location.setName("Test Location");
+        location.setTags(new HashSet<>());
+        location.getTags().add("Village");
+        Map<String, String> attributes = new HashMap<>();
+        attributes.put("Code", "OLD.CODE");
+        location.setAttributes(attributes);
+        Main.codeCache.put("old.code", location);
+
+        try (MockedStatic<CSVReaderUtil> mockReader = mockStatic(CSVReaderUtil.class);
+             MockedStatic<OpenMrsCallsUtils> mockOpenMrs = mockStatic(OpenMrsCallsUtils.class)) {
+            mockReader.when(() -> CSVReaderUtil.readHfrCodeCorrectionsFromResources("test.csv"))
+                    .thenReturn(List.of(row));
+            mockOpenMrs.when(() -> OpenMrsCallsUtils.getLocationAttributeUuid(anyString(), anyString()))
+                    .thenThrow(new RuntimeException("boom"));
+
+            Utils.applyHamletCodeCorrectionsFromCSV("test.csv");
+        }
+
+        JSONArray logEntries = readLogArray("src/main/resources/hamlets_updates_failed.json");
+        assertEquals(1, logEntries.length());
+        assertEquals("OLD.CODE", logEntries.getJSONObject(0).getString("incorrectCode"));
+    }
+
+    @Test
+    void testApplyHamletCodeCorrectionsLogsDuplicate() throws IOException {
+        HfrCodeCorrectionRow row = new HfrCodeCorrectionRow();
+        row.setIncorrectHfrCode("DUP.OLD");
+        row.setCorrectHfrCode("DUP.NEW");
+        row.setLocationName("Duplicate Location");
+
+        Location incorrectLocation = new Location();
+        incorrectLocation.setLocationId("incorrect-uuid");
+        incorrectLocation.setName("Incorrect");
+        incorrectLocation.setTags(new HashSet<>());
+        incorrectLocation.getTags().add("Village");
+        Map<String, String> incorrectAttributes = new HashMap<>();
+        incorrectAttributes.put("Code", "DUP.OLD");
+        incorrectLocation.setAttributes(incorrectAttributes);
+
+        Location correctLocation = new Location();
+        correctLocation.setLocationId("correct-uuid");
+        correctLocation.setName("Correct");
+        correctLocation.setTags(new HashSet<>());
+        correctLocation.getTags().add("Village");
+        Map<String, String> correctAttributes = new HashMap<>();
+        correctAttributes.put("Code", "DUP.NEW");
+        correctLocation.setAttributes(correctAttributes);
+
+        Main.codeCache.put("dup.old", incorrectLocation);
+        Main.codeCache.put("dup.new", correctLocation);
+
+        try (MockedStatic<CSVReaderUtil> mockReader = mockStatic(CSVReaderUtil.class);
+             MockedStatic<OpenMrsCallsUtils> mockOpenMrs = mockStatic(OpenMrsCallsUtils.class)) {
+            mockReader.when(() -> CSVReaderUtil.readHfrCodeCorrectionsFromResources("test.csv"))
+                    .thenReturn(List.of(row));
+
+            Utils.applyHamletCodeCorrectionsFromCSV("test.csv");
+
+            mockOpenMrs.verify(() -> OpenMrsCallsUtils.updateLocationAttribute(anyString(), anyString(), anyString(), anyString()), never());
+            mockOpenMrs.verify(() -> OpenMrsCallsUtils.updateChildLocationParent(any(), anyString()), never());
+        }
+
+        List<String> lines = readCsvLines("src/main/resources/hamlets_updates_duplicates.csv");
+        assertEquals(2, lines.size());
+        assertTrue(lines.get(1).contains("DUP.OLD"));
+        assertTrue(lines.get(1).contains("DUP.NEW"));
+        assertTrue(lines.get(1).contains("incorrect-uuid"));
+        assertTrue(lines.get(1).contains("correct-uuid"));
+    }
+
+    private static void deleteLogFiles() {
+        try {
+            resetLogFile(Paths.get("src/main/resources/hamlets_updates_success.json"));
+            resetLogFile(Paths.get("src/main/resources/hamlets_updates_failed.json"));
+            resetLogFile(Paths.get("src/main/resources/hamlets_updates_missing.json"));
+            Files.deleteIfExists(Paths.get("src/main/resources/hamlets_updates_duplicates.csv"));
+        } catch (IOException ignored) {
+        }
+    }
+
+    private static void resetLogFile(Path path) throws IOException {
+        Files.createDirectories(path.getParent());
+        Files.writeString(path, "[]", StandardCharsets.UTF_8);
+    }
+
+    private static JSONArray readLogArray(String path) throws IOException {
+        Path filePath = Paths.get(path);
+        assertTrue(Files.exists(filePath), "Expected log file to exist at " + path);
+        String content = Files.readString(filePath, StandardCharsets.UTF_8).trim();
+        if (content.isEmpty()) {
+            return new JSONArray();
+        }
+        return new JSONArray(content);
+    }
+
+    private static List<String> readCsvLines(String path) throws IOException {
+        Path filePath = Paths.get(path);
+        assertTrue(Files.exists(filePath), "Expected CSV file to exist at " + path);
+        return Files.readAllLines(filePath, StandardCharsets.UTF_8);
     }
 }
