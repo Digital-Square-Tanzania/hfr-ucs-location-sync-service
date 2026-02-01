@@ -10,9 +10,11 @@ import tz.go.moh.ucs.util.FetchLocationsHelper;
 import tz.go.moh.ucs.util.HttpUtil;
 
 import java.io.BufferedReader;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -31,6 +33,8 @@ public class Main {
     public static String HFR_CODE_LOCATION_ATTRIBUTE_UUID;
     public static List<Location> allLocations = new ArrayList<>();
     public static String HAMLET_RESOURCE_FILE_NAME;
+    private static final String SELECTED_COUNCILS_RESOURCE_NAME = "selected_councils.json";
+    private static final Set<String> SELECTED_COUNCILS = loadSelectedCouncils();
     private static final ThreadLocal<Boolean> HAMLET_IMPORT_CONTEXT = ThreadLocal.withInitial(() -> Boolean.FALSE);
     private static final ThreadLocal<String> HAMLET_IMPORT_RESOURCE = new ThreadLocal<>();
 
@@ -100,6 +104,78 @@ public class Main {
         }
     }
 
+    private static Set<String> loadSelectedCouncils() {
+        Set<String> councils = new HashSet<>();
+        try (InputStream is = Main.class.getClassLoader().getResourceAsStream(SELECTED_COUNCILS_RESOURCE_NAME)) {
+            if (is == null) {
+                LOGGER.warning("Selected councils resource not found: " + SELECTED_COUNCILS_RESOURCE_NAME);
+                return Collections.emptySet();
+            }
+            StringBuilder jsonBuilder = new StringBuilder();
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    jsonBuilder.append(line);
+                }
+            }
+            String json = jsonBuilder.toString().trim();
+            if (json.isEmpty()) {
+                LOGGER.warning("Selected councils resource is empty: " + SELECTED_COUNCILS_RESOURCE_NAME);
+                return Collections.emptySet();
+            }
+
+            JSONArray councilArray;
+            if (json.startsWith("[")) {
+                councilArray = new JSONArray(json);
+            } else if (json.startsWith("{")) {
+                JSONObject root = new JSONObject(json);
+                if (root.has("councils")) {
+                    councilArray = root.getJSONArray("councils");
+                } else if (root.has("selectedCouncils")) {
+                    councilArray = root.getJSONArray("selectedCouncils");
+                } else if (root.has("selected_councils")) {
+                    councilArray = root.getJSONArray("selected_councils");
+                } else {
+                    LOGGER.warning("Selected councils resource missing councils array: " + SELECTED_COUNCILS_RESOURCE_NAME);
+                    return Collections.emptySet();
+                }
+            } else {
+                LOGGER.warning("Selected councils resource has unexpected format: " + SELECTED_COUNCILS_RESOURCE_NAME);
+                return Collections.emptySet();
+            }
+
+            for (int i = 0; i < councilArray.length(); i++) {
+                String councilName = councilArray.optString(i, "").trim();
+                if (!councilName.isEmpty()) {
+                    councils.add(normalizeCouncilName(councilName));
+                }
+            }
+        } catch (Exception e) {
+            LOGGER.log(Level.SEVERE, "Failed to load selected councils from " + SELECTED_COUNCILS_RESOURCE_NAME, e);
+        }
+
+        if (councils.isEmpty()) {
+            LOGGER.warning("No selected councils found in " + SELECTED_COUNCILS_RESOURCE_NAME);
+            return Collections.emptySet();
+        }
+
+        return Collections.unmodifiableSet(councils);
+    }
+
+    private static String normalizeCouncilName(String councilName) {
+        if (councilName == null) {
+            return "";
+        }
+        return councilName.trim().replaceAll("\\s+", " ").toLowerCase(Locale.ROOT);
+    }
+
+    private static boolean isSelectedCouncil(String councilName) {
+        if (SELECTED_COUNCILS.isEmpty()) {
+            return false;
+        }
+        return SELECTED_COUNCILS.contains(normalizeCouncilName(councilName));
+    }
+
 
     /**
      * Process HFR Admin Hierarchy
@@ -107,12 +183,16 @@ public class Main {
     public static void processAdminHierarchyData(JSONArray response) {
         for (int i = 0; i < response.length(); i++) {
             JSONObject facilityJson = response.getJSONObject(i);
+            String councilName = facilityJson.optString("council", null);
+            if (!isSelectedCouncil(councilName)) {
+                continue;
+            }
             try {
                 Location countryLoc = ensureLocationExists(null, capitalizeWords(facilityJson.getString("country")), "TZ", "Country");
                 Location zoneLoc = ensureLocationExists(countryLoc, capitalizeWords(facilityJson.getString("zone")), facilityJson.getString("zone_code"), "Zone");
                 ensureLocationExists(zoneLoc, capitalizeWords(facilityJson.getString("region")), facilityJson.getString("region_code"), "Region");
-                Location wardLoc = ensureLocationExists(null, capitalizeWords(facilityJson.getString("ward") + " - " + facilityJson.getString("council")), facilityJson.getString("ward_code"), "Ward");
-                ensureLocationExists(wardLoc, capitalizeWords(facilityJson.getString("village_mtaa") + " - " + facilityJson.getString("ward") + " - " + facilityJson.getString("council")), facilityJson.getString("village_mtaa_code"), "Village");
+                Location wardLoc = ensureLocationExists(null, capitalizeWords(facilityJson.getString("ward") + " - " + councilName), facilityJson.getString("ward_code"), "Ward");
+                ensureLocationExists(wardLoc, capitalizeWords(facilityJson.getString("village_mtaa") + " - " + facilityJson.getString("ward") + " - " + councilName), facilityJson.getString("village_mtaa_code"), "Village");
             } catch (Exception e) {
                 LOGGER.severe("Error processing Admin Hierarchy " + e.getMessage());
             }
