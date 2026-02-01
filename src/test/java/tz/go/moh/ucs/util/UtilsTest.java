@@ -1,7 +1,5 @@
 package tz.go.moh.ucs.util;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
@@ -200,11 +198,10 @@ class UtilsTest {
             assertEquals(location, Main.codeCache.get("newcode"));
         }
 
-        JSONArray logEntries = readLogArray("src/main/resources/hamlets_updates_success.json");
-        assertEquals(1, logEntries.length());
-        JSONObject entry = logEntries.getJSONObject(0);
-        assertEquals("OLD.CODE", entry.getString("incorrectCode"));
-        assertEquals("NEWCODE", entry.getString("correctCode"));
+        List<String> lines = readCsvLines("src/main/resources/hamlets_updates_success.csv");
+        assertEquals(2, lines.size());
+        assertTrue(lines.get(1).contains("OLD.CODE"));
+        assertTrue(lines.get(1).contains("NEWCODE"));
     }
 
     @Test
@@ -265,9 +262,9 @@ class UtilsTest {
             Utils.applyHamletCodeCorrectionsFromCSV("test.csv");
         }
 
-        JSONArray logEntries = readLogArray("src/main/resources/hamlets_updates_missing.json");
-        assertEquals(1, logEntries.length());
-        assertEquals("MISSING.CODE", logEntries.getJSONObject(0).getString("incorrectCode"));
+        List<String> lines = readCsvLines("src/main/resources/hamlets_updates_missing.csv");
+        assertEquals(2, lines.size());
+        assertTrue(lines.get(1).contains("MISSING.CODE"));
     }
 
     @Test
@@ -302,9 +299,9 @@ class UtilsTest {
             assertNull(child.getParentLocation());
         }
 
-        JSONArray logEntries = readLogArray("src/main/resources/hamlets_updates_success.json");
-        assertEquals(1, logEntries.length());
-        assertTrue(logEntries.getJSONObject(0).getString("message").contains("Parent location not found"));
+        List<String> lines = readCsvLines("src/main/resources/hamlets_updates_success.csv");
+        assertEquals(2, lines.size());
+        assertTrue(lines.get(1).contains("Parent location not found"));
     }
 
     @Test
@@ -333,9 +330,9 @@ class UtilsTest {
             Utils.applyHamletCodeCorrectionsFromCSV("test.csv");
         }
 
-        JSONArray logEntries = readLogArray("src/main/resources/hamlets_updates_failed.json");
-        assertEquals(1, logEntries.length());
-        assertEquals("OLD.CODE", logEntries.getJSONObject(0).getString("incorrectCode"));
+        List<String> lines = readCsvLines("src/main/resources/hamlets_updates_failed.csv");
+        assertEquals(2, lines.size());
+        assertTrue(lines.get(1).contains("OLD.CODE"));
     }
 
     @Test
@@ -387,27 +384,12 @@ class UtilsTest {
 
     private static void deleteLogFiles() {
         try {
-            resetLogFile(Paths.get("src/main/resources/hamlets_updates_success.json"));
-            resetLogFile(Paths.get("src/main/resources/hamlets_updates_failed.json"));
-            resetLogFile(Paths.get("src/main/resources/hamlets_updates_missing.json"));
+            Files.deleteIfExists(Paths.get("src/main/resources/hamlets_updates_success.csv"));
+            Files.deleteIfExists(Paths.get("src/main/resources/hamlets_updates_failed.csv"));
+            Files.deleteIfExists(Paths.get("src/main/resources/hamlets_updates_missing.csv"));
             Files.deleteIfExists(Paths.get("src/main/resources/hamlets_updates_duplicates.csv"));
         } catch (IOException ignored) {
         }
-    }
-
-    private static void resetLogFile(Path path) throws IOException {
-        Files.createDirectories(path.getParent());
-        Files.writeString(path, "[]", StandardCharsets.UTF_8);
-    }
-
-    private static JSONArray readLogArray(String path) throws IOException {
-        Path filePath = Paths.get(path);
-        assertTrue(Files.exists(filePath), "Expected log file to exist at " + path);
-        String content = Files.readString(filePath, StandardCharsets.UTF_8).trim();
-        if (content.isEmpty()) {
-            return new JSONArray();
-        }
-        return new JSONArray(content);
     }
 
     private static List<String> readCsvLines(String path) throws IOException {
