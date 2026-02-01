@@ -9,6 +9,7 @@ import tz.go.moh.ucs.domain.Location;
 import tz.go.moh.ucs.service.HfrService;
 import tz.go.moh.ucs.util.FetchLocationsHelper;
 import tz.go.moh.ucs.util.OpenMrsCallsUtils;
+import tz.go.moh.ucs.util.Utils;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -119,6 +120,50 @@ class MainTest {
 
         assertNotNull(Main.locationCache);
         assertNotNull(Main.codeCache);
+    }
+
+    @Test
+    void processAdminHierarchyDataSkipsUnselectedCouncils() {
+        JSONArray mockResponse = new JSONArray();
+        JSONObject mockObject = new JSONObject();
+        mockObject.put("country", "Tanzania");
+        mockObject.put("zone", "Zone1");
+        mockObject.put("zone_code", "Z1");
+        mockObject.put("region", "Region1");
+        mockObject.put("region_code", "R1");
+        mockObject.put("ward", "Ward1");
+        mockObject.put("ward_code", "W1");
+        mockObject.put("village_mtaa", "Village1");
+        mockObject.put("village_mtaa_code", "V1");
+        mockObject.put("council", "Other Council");
+        mockResponse.put(mockObject);
+
+        try (MockedStatic<Utils> mockedUtils = mockStatic(Utils.class)) {
+            Main.processAdminHierarchyData(mockResponse);
+            mockedUtils.verifyNoInteractions();
+        }
+    }
+
+    @Test
+    void processAdminHierarchyDataProcessesSelectedCouncils() {
+        JSONArray mockResponse = new JSONArray();
+        JSONObject mockObject = new JSONObject();
+        mockObject.put("country", "Tanzania");
+        mockObject.put("zone", "Zone1");
+        mockObject.put("zone_code", "Z1");
+        mockObject.put("region", "Region1");
+        mockObject.put("region_code", "R1");
+        mockObject.put("ward", "Ward1");
+        mockObject.put("ward_code", "W1");
+        mockObject.put("village_mtaa", "Village1");
+        mockObject.put("village_mtaa_code", "V1");
+        mockObject.put("council", "Tanga CC");
+        mockResponse.put(mockObject);
+
+        try (MockedStatic<Utils> mockedUtils = mockStatic(Utils.class)) {
+            Main.processAdminHierarchyData(mockResponse);
+            mockedUtils.verify(() -> Utils.ensureLocationExists(any(), anyString(), anyString(), anyString()), times(5));
+        }
     }
 
     @Test
