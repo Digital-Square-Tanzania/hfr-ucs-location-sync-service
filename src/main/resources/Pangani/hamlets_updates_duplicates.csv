@@ -1,0 +1,5 @@
+timestamp,incorrectCode,correctCode,incorrectUuid,correctUuid,message,locationName,locationType,uid
+"2026-02-01T08:56:40.299609Z","TZ.NT.TN.TN.4.3.5","TZ.NT.TN.TN.4.3.8","c4400bec-6e7e-4b6c-9c77-600516872127","d20960b2-dbdb-4815-8810-8f90386cb144","Duplicate locations found for incorrect and correct codes","Gofu Juu B Street","Village","blLdVGNMovz"
+"2026-02-01T08:56:40.301994Z","TZ.NT.TN.TN.4.25.1","TZ.NT.TN.TN.4.2.5","04e774f0-4cea-4ed6-a018-dc5979936373","123c37b2-24ea-4ea7-bfe4-9ee4a96dc2b3","Duplicate locations found for incorrect and correct codes","Tawakal Street","Village","EvsSIBYSS6E"
+"2026-02-01T08:56:41.883819Z","TZ.NT.TN.TN.4.2.8","TZ.NT.TN.TN.4.2.7","acbc77d3-c5cf-44de-919a-19935c6979d4","122c4723-594a-4fce-9be5-30f1259b09ae","Duplicate locations found for incorrect and correct codes","Fadhila Street","Village","ilZ0GttfBkZ"
+"2026-02-01T08:57:03.339681Z","TZ.NT.TN.TN.4.18.2","TZ.NT.TN.TN.4.18.3","ab010824-4c69-40eb-a379-1557f669d5e5","d6b75729-c60b-480a-a899-e249dc19a568","Duplicate locations found for incorrect and correct codes","Saruji Street","Village","tOyWr1JApP7"
