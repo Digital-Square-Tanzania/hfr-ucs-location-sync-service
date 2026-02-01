@@ -56,7 +56,8 @@ public class Main {
         LOGGER.info("Fetched " + allLocations.size() + " locations.");
 //        fetchHfrData(1);
 //        fetchHfrAdminHierarchyData(1);
-        importHamletLocationsFromCSV(HAMLET_RESOURCE_FILE_NAME);
+        applyHamletCodeCorrectionsFromCSV(HAMLET_RESOURCE_FILE_NAME);
+//        importHamletLocationsFromCSV(HAMLET_RESOURCE_FILE_NAME);
 
         LOGGER.info("COMPLETED SYNCHRONIZATION OF HFR LOCATIONS");
     }

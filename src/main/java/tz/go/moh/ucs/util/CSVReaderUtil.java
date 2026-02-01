@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import tz.go.moh.ucs.domain.HfrCodeCorrectionRow;
 import tz.go.moh.ucs.domain.LocationCSVRow;
 
 public class CSVReaderUtil {
@@ -61,6 +62,50 @@ public class CSVReaderUtil {
         return locations;
     }
 
+    /**
+     * Reads a correction CSV/TSV file from the resources folder and maps each row to a HfrCodeCorrectionRow.
+     *
+     * @param resourceName the resource name, e.g. "hamlets_list.csv"
+     * @return a list of HfrCodeCorrectionRow objects
+     * @throws IOException if an I/O error occurs
+     */
+    public static List<HfrCodeCorrectionRow> readHfrCodeCorrectionsFromResources(String resourceName) throws IOException {
+        List<HfrCodeCorrectionRow> rows = new ArrayList<>();
+
+        try (InputStream is = CSVReaderUtil.class.getClassLoader().getResourceAsStream(resourceName)) {
+            if (is == null) {
+                throw new IOException("Resource not found: " + resourceName);
+            }
+
+            try (BufferedReader br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))) {
+                String headerLine = br.readLine();
+                if (headerLine == null) {
+                    return rows;
+                }
+
+                Map<String, Integer> headerIndex = buildHeaderIndex(headerLine);
+                String line;
+                while ((line = br.readLine()) != null) {
+                    if (line.trim().isEmpty()) {
+                        continue;
+                    }
+
+                    String[] values = splitCsvRow(line);
+                    if (values.length == 0) {
+                        continue;
+                    }
+
+                    HfrCodeCorrectionRow row = buildCorrectionRow(values, headerIndex);
+                    if (row != null) {
+                        rows.add(row);
+                    }
+                }
+            }
+        }
+
+        return rows;
+    }
+
     private static Map<String, Integer> buildHeaderIndex(String headerLine) {
         Map<String, Integer> headerIndex = new HashMap<>();
         String[] headers = splitCsvRow(headerLine);
@@ -96,17 +141,39 @@ public class CSVReaderUtil {
         return row;
     }
 
+    private static HfrCodeCorrectionRow buildCorrectionRow(String[] values, Map<String, Integer> headerIndex) {
+        String incorrectCode = getValue(values, headerIndex, "incorrect hfr code", "incorrect_hfr_code", "incorrect code", "incorrect_code");
+        String correctCode = getValue(values, headerIndex, "correct hfr code", "correct_hfr_code", "correct code", "correct_code");
+        String name = getValue(values, headerIndex, "wards/villlages/hamlet", "wards/villages/hamlet", "ward/village/hamlet", "name");
+        String locationType = getValue(values, headerIndex, "location type (ward, village, hamlet)", "location type", "location_type");
+        String uid = getValue(values, headerIndex, "uid", "uuid");
+
+        if (isBlank(incorrectCode) && isBlank(correctCode) && isBlank(name) && isBlank(uid)) {
+            return null;
+        }
+
+        HfrCodeCorrectionRow row = new HfrCodeCorrectionRow();
+        row.setIncorrectHfrCode(trimToNull(incorrectCode));
+        row.setCorrectHfrCode(trimToNull(correctCode));
+        row.setLocationName(trimToNull(name));
+        row.setLocationType(trimToNull(locationType));
+        row.setUid(trimToNull(uid));
+        return row;
+    }
+
     private static String[] splitCsvRow(String line) {
         if (line == null) {
             return new String[0];
         }
         String sanitizedLine = line.replace("\uFEFF", "").replace("\r", "");
-        return sanitizedLine.split(",", -1);
+        String delimiter = sanitizedLine.contains("\t") ? "\t" : ",";
+        return sanitizedLine.split(delimiter, -1);
     }
 
     private static String getValue(String[] values, Map<String, Integer> headerIndex, String... keys) {
         for (String key : keys) {
-            Integer index = headerIndex.get(key);
+            String normalizedKey = normalizeHeader(key);
+            Integer index = headerIndex.get(normalizedKey);
             if (index != null && index < values.length) {
                 return trimToNull(values[index]);
             }
@@ -127,6 +194,13 @@ public class CSVReaderUtil {
     }
 
     private static String normalizeHeader(String header) {
-        return header == null ? "" : header.trim().toLowerCase();
+        if (header == null) {
+            return "";
+        }
+        String normalized = header.trim().toLowerCase();
+        normalized = normalized.replace("\uFEFF", "");
+        normalized = normalized.replaceAll("[^a-z0-9]+", "_");
+        normalized = normalized.replaceAll("^_+|_+$", "");
+        return normalized;
     }
 }

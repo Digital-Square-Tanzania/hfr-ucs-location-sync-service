@@ -1,5 +1,6 @@
 package tz.go.moh.ucs.util;
 
+import tz.go.moh.ucs.domain.HfrCodeCorrectionRow;
 import tz.go.moh.ucs.domain.Location;
 import tz.go.moh.ucs.domain.LocationCSVRow;
 
@@ -19,14 +20,22 @@ import org.json.JSONObject;
 
 import static tz.go.moh.ucs.Main.*;
 import static tz.go.moh.ucs.util.CSVReaderUtil.readCsvFromResources;
+import static tz.go.moh.ucs.util.CSVReaderUtil.readHfrCodeCorrectionsFromResources;
 import static tz.go.moh.ucs.util.CapitalizeUtil.capitalizeWords;
+import static tz.go.moh.ucs.util.OpenMrsCallsUtils.addLocationAttribute;
+import static tz.go.moh.ucs.util.OpenMrsCallsUtils.getLocationAttributeUuid;
 import static tz.go.moh.ucs.util.OpenMrsCallsUtils.updateChildLocationParent;
+import static tz.go.moh.ucs.util.OpenMrsCallsUtils.updateLocationAttribute;
 import static tz.go.moh.ucs.util.OpenMrsCallsUtils.updateLocationName;
 
 public class Utils {
     private static final Logger LOGGER = Logger.getLogger(Utils.class.getName());
     private static final Path HAMLET_UPDATE_LOG_PATH = Paths.get("src", "main", "resources", "hamlet_updates_log.json");
     private static final Path HAMLET_CREATION_LOG_PATH = Paths.get("src", "main", "resources", "hamlet_creations_log.json");
+    private static final Path HAMLET_CODE_SUCCESS_LOG_PATH = Paths.get("src", "main", "resources", "hamlets_updates_success.json");
+    private static final Path HAMLET_CODE_FAILED_LOG_PATH = Paths.get("src", "main", "resources", "hamlets_updates_failed.json");
+    private static final Path HAMLET_CODE_MISSING_LOG_PATH = Paths.get("src", "main", "resources", "hamlets_updates_missing.json");
+    private static final Path HAMLET_CODE_DUPLICATE_LOG_PATH = Paths.get("src", "main", "resources", "hamlets_updates_duplicates.csv");
     private static final Set<String> PRIORITY_WARD_CODES = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
             "TZ.WT.KM.BW.6.16",
             "TZ.WT.KM.BW.6.17",
@@ -215,6 +224,31 @@ public class Utils {
         }
     }
 
+    /**
+     * Applies HFR code corrections from the hamlet list CSV/TSV.
+     */
+    public static void applyHamletCodeCorrectionsFromCSV(String resourceName) {
+        List<HfrCodeCorrectionRow> rows = null;
+        try {
+            rows = readHfrCodeCorrectionsFromResources(resourceName);
+        } catch (IOException e) {
+            LOGGER.log(Level.SEVERE, "Error reading HFR correction CSV file", e);
+        }
+
+        if (rows == null || rows.isEmpty()) {
+            LOGGER.info("No HFR code corrections found in " + resourceName);
+            return;
+        }
+
+        for (HfrCodeCorrectionRow row : rows) {
+            try {
+                processHfrCodeCorrection(row);
+            } catch (Exception e) {
+                logHamletCodeFailure(row, "Exception updating HFR code", e);
+            }
+        }
+    }
+
     private static Location resolveWardLocation(LocationCSVRow row) throws Exception {
         if (row.getWardCode() == null || row.getWardCode().isEmpty()) {
             return null;
@@ -236,6 +270,76 @@ public class Utils {
         }
 
         return findLocationByCode(wardCode);
+    }
+
+    private static void processHfrCodeCorrection(HfrCodeCorrectionRow row) throws Exception {
+        String incorrectCode = trimToNull(row.getIncorrectHfrCode());
+        String correctCode = trimToNull(row.getCorrectHfrCode());
+
+        if (incorrectCode == null || correctCode == null) {
+            String message = "Missing incorrect or correct HFR code";
+            LOGGER.warning(message);
+            logHamletCodeFailure(row, message, null);
+            return;
+        }
+
+        Location incorrectLocation = findLocationByCode(incorrectCode);
+        Location correctLocation = findLocationByCode(correctCode);
+
+        if (incorrectLocation != null && correctLocation != null && !isSameLocation(incorrectLocation, correctLocation)) {
+            logHamletCodeDuplicate(row, incorrectLocation, correctLocation,
+                    "Duplicate locations found for incorrect and correct codes");
+            return;
+        }
+
+        Location location = incorrectLocation != null ? incorrectLocation : correctLocation;
+        boolean foundByIncorrect = incorrectLocation != null;
+        boolean alreadyCorrect = false;
+        if (location == null) {
+            LOGGER.warning("Location not found for incorrect code " + incorrectCode);
+            logHamletCodeMissing(row, "Location not found for incorrect code");
+            return;
+        }
+
+        if (correctLocation != null && isSameLocation(location, correctLocation)) {
+            alreadyCorrect = true;
+        }
+
+        if (!alreadyCorrect) {
+            String existingCode = resolveLocationCode(location);
+            if (existingCode != null && existingCode.equalsIgnoreCase(correctCode)) {
+                alreadyCorrect = true;
+            }
+        }
+
+        String parentCode = deriveParentCode(correctCode);
+        Location parentLocation = parentCode != null ? findLocationByCode(parentCode) : null;
+        String parentWarning = null;
+
+        if (!alreadyCorrect) {
+            updateLocationCodeAttribute(location, incorrectCode, correctCode);
+        } else if (foundByIncorrect) {
+            updateCodeCache(location, incorrectCode, correctCode);
+        }
+
+        if (parentCode != null) {
+            if (parentLocation != null) {
+                if (location.getParentLocation() == null ||
+                        !parentLocation.getLocationId().equals(location.getParentLocation().getLocationId())) {
+                    updateChildLocationParent(location, parentLocation.getLocationId());
+                    location.setParentLocation(parentLocation);
+                }
+            } else {
+                parentWarning = "Parent location not found for code " + parentCode;
+                LOGGER.warning(parentWarning + " (child code " + correctCode + ")");
+            }
+        }
+
+        String message = alreadyCorrect ? "Location already updated" : "Location updated";
+        if (parentWarning != null) {
+            message = message + "; " + parentWarning;
+        }
+        logHamletCodeSuccess(row, location, parentCode, parentLocation, message);
     }
 
     private static boolean shouldLogHamletChange(String tag) {
@@ -280,6 +384,84 @@ public class Utils {
         return String.join(" - ", parts);
     }
 
+    private static boolean isSameLocation(Location left, Location right) {
+        if (left == right) {
+            return true;
+        }
+        if (left == null || right == null) {
+            return false;
+        }
+        String leftId = left.getLocationId();
+        String rightId = right.getLocationId();
+        return leftId != null && rightId != null && leftId.equalsIgnoreCase(rightId);
+    }
+
+    private static String resolveLocationCode(Location location) {
+        if (location == null || location.getAttributes() == null) {
+            return null;
+        }
+        String code = location.getAttributes().get("Code");
+        if (code == null) {
+            code = location.getAttributes().get("HFR Code");
+        }
+        return trimToNull(code);
+    }
+
+    private static boolean usesHfrCodeAttribute(Location location) {
+        if (location == null) {
+            return false;
+        }
+        if (location.getTags() != null && location.getTags().contains("Facility")) {
+            return true;
+        }
+        return location.getAttributes() != null && location.getAttributes().get("HFR Code") != null;
+    }
+
+    private static void updateLocationCodeAttribute(Location location, String previousCode, String correctCode) {
+        if (location == null) {
+            return;
+        }
+        boolean hfrAttribute = usesHfrCodeAttribute(location);
+        String attributeKey = hfrAttribute ? "HFR Code" : "Code";
+        String attributeTypeUuid = hfrAttribute ? HFR_CODE_LOCATION_ATTRIBUTE_UUID : CODE_LOCATION_ATTRIBUTE_UUID;
+
+        String attributeUuid = getLocationAttributeUuid(location.getLocationId(), attributeTypeUuid);
+        if (attributeUuid != null) {
+            updateLocationAttribute(location.getLocationId(), attributeUuid, attributeTypeUuid, correctCode);
+        } else {
+            addLocationAttribute(location, attributeTypeUuid, correctCode);
+        }
+
+        if (location.getAttributes() == null) {
+            location.setAttributes(new HashMap<>());
+        }
+        location.getAttributes().put(attributeKey, correctCode);
+        updateCodeCache(location, previousCode, correctCode);
+    }
+
+    private static void updateCodeCache(Location location, String previousCode, String newCode) {
+        if (previousCode != null) {
+            Location existing = codeCache.get(previousCode.toLowerCase());
+            if (existing == location) {
+                codeCache.remove(previousCode.toLowerCase());
+            }
+        }
+        if (newCode != null) {
+            codeCache.put(newCode.toLowerCase(), location);
+        }
+    }
+
+    private static String deriveParentCode(String correctCode) {
+        if (correctCode == null) {
+            return null;
+        }
+        int lastDot = correctCode.lastIndexOf('.');
+        if (lastDot <= 0) {
+            return null;
+        }
+        return correctCode.substring(0, lastDot);
+    }
+
     private static void logLocationUpdate(String tag, String code, String previousName, String updatedName, Location previousParent, Location newParent, List<String> changes) {
         if (changes == null || changes.isEmpty()) {
             return;
@@ -316,12 +498,92 @@ public class Utils {
         appendHamletCreationLog(entry);
     }
 
+    private static void logHamletCodeSuccess(HfrCodeCorrectionRow row, Location location, String parentCode, Location parentLocation, String message) {
+        JSONObject entry = buildCorrectionLogEntry(row, location, parentCode, parentLocation);
+        entry.put("message", message != null ? message : JSONObject.NULL);
+        appendHamletCodeLog(HAMLET_CODE_SUCCESS_LOG_PATH, entry, "success");
+    }
+
+    private static void logHamletCodeFailure(HfrCodeCorrectionRow row, String message, Exception exception) {
+        JSONObject entry = buildCorrectionLogEntry(row, null, null, null);
+        entry.put("message", message != null ? message : JSONObject.NULL);
+        if (exception != null) {
+            entry.put("exception", exception.getClass().getSimpleName());
+        }
+        appendHamletCodeLog(HAMLET_CODE_FAILED_LOG_PATH, entry, "failed");
+    }
+
+    private static void logHamletCodeMissing(HfrCodeCorrectionRow row, String message) {
+        JSONObject entry = buildCorrectionLogEntry(row, null, null, null);
+        entry.put("message", message != null ? message : JSONObject.NULL);
+        appendHamletCodeLog(HAMLET_CODE_MISSING_LOG_PATH, entry, "missing");
+    }
+
+    private static void logHamletCodeDuplicate(HfrCodeCorrectionRow row, Location incorrectLocation, Location correctLocation, String message) {
+        String timestamp = Instant.now().toString();
+        String line = String.join(",",
+                csvEscape(timestamp),
+                csvEscape(row != null ? row.getIncorrectHfrCode() : null),
+                csvEscape(row != null ? row.getCorrectHfrCode() : null),
+                csvEscape(incorrectLocation != null ? incorrectLocation.getLocationId() : null),
+                csvEscape(correctLocation != null ? correctLocation.getLocationId() : null),
+                csvEscape(message),
+                csvEscape(row != null ? row.getLocationName() : null),
+                csvEscape(row != null ? row.getLocationType() : null),
+                csvEscape(row != null ? row.getUid() : null)
+        );
+        appendHamletDuplicateCsv(HAMLET_CODE_DUPLICATE_LOG_PATH, line);
+    }
+
+    private static JSONObject buildCorrectionLogEntry(HfrCodeCorrectionRow row, Location location, String parentCode, Location parentLocation) {
+        JSONObject entry = new JSONObject();
+        entry.put("timestamp", Instant.now().toString());
+        entry.put("incorrectCode", row != null ? safeJsonValue(row.getIncorrectHfrCode()) : JSONObject.NULL);
+        entry.put("correctCode", row != null ? safeJsonValue(row.getCorrectHfrCode()) : JSONObject.NULL);
+        entry.put("locationName", row != null ? safeJsonValue(row.getLocationName()) : JSONObject.NULL);
+        entry.put("locationType", row != null ? safeJsonValue(row.getLocationType()) : JSONObject.NULL);
+        entry.put("uid", row != null ? safeJsonValue(row.getUid()) : JSONObject.NULL);
+        entry.put("locationUuid", location != null ? location.getLocationId() : JSONObject.NULL);
+        entry.put("parentCode", parentCode != null ? parentCode : JSONObject.NULL);
+        entry.put("parentUuid", parentLocation != null ? parentLocation.getLocationId() : JSONObject.NULL);
+        return entry;
+    }
+
     private static void appendHamletUpdateLog(JSONObject entry) {
         appendHamletLog(HAMLET_UPDATE_LOG_PATH, entry, "update");
     }
 
     private static void appendHamletCreationLog(JSONObject entry) {
         appendHamletLog(HAMLET_CREATION_LOG_PATH, entry, "creation");
+    }
+
+    private static void appendHamletCodeLog(Path path, JSONObject entry, String logLabel) {
+        appendHamletLog(path, entry, logLabel);
+    }
+
+    private static synchronized void appendHamletDuplicateCsv(Path path, String line) {
+        try {
+            Files.createDirectories(path.getParent());
+            boolean needsHeader = !Files.exists(path) || Files.size(path) == 0;
+            if (needsHeader) {
+                String header = String.join(",",
+                        "timestamp",
+                        "incorrectCode",
+                        "correctCode",
+                        "incorrectUuid",
+                        "correctUuid",
+                        "message",
+                        "locationName",
+                        "locationType",
+                        "uid");
+                Files.writeString(path, header + System.lineSeparator(), StandardCharsets.UTF_8,
+                        StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+            }
+            Files.writeString(path, line + System.lineSeparator(), StandardCharsets.UTF_8,
+                    StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+        } catch (IOException e) {
+            LOGGER.log(Level.SEVERE, "Failed to write hamlet duplicate log", e);
+        }
     }
 
     private static synchronized void appendHamletLog(Path path, JSONObject entry, String logLabel) {
@@ -345,5 +607,23 @@ public class Utils {
         } catch (IOException e) {
             LOGGER.log(Level.SEVERE, "Failed to write hamlet " + logLabel + " log", e);
         }
+    }
+
+    private static String trimToNull(String value) {
+        if (value == null) {
+            return null;
+        }
+        String trimmed = value.trim();
+        return trimmed.isEmpty() ? null : trimmed;
+    }
+
+    private static Object safeJsonValue(String value) {
+        return value != null ? value : JSONObject.NULL;
+    }
+
+    private static String csvEscape(String value) {
+        String safe = value == null ? "" : value;
+        String escaped = safe.replace("\"", "\"\"");
+        return "\"" + escaped + "\"";
     }
 }
