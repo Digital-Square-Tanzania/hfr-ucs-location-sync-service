@@ -234,16 +234,32 @@ public class Main {
                         capitalizeWords(facilityJson.getString("council")), facilityJson.getString(
                                 "council_code"), "Council");
 
+                String wardName = sanitizeWardName(facilityJson.getString("ward"));
                 Location wardLoc = ensureLocationExists(councilLoc,
-                        capitalizeWords(facilityJson.getString("ward") + " - "
+                        capitalizeWords(wardName + " - "
                                 + councilName), facilityJson.getString(
                                         "ward_code"), "Ward");
+                String villageMtaa = sanitizeVillageMtaaName(facilityJson.getString("village_mtaa"));
                 ensureLocationExists(wardLoc,
-                        capitalizeWords(facilityJson.getString("village_mtaa") + " - " + facilityJson.getString("ward") + " - " + councilName), facilityJson.getString("village_mtaa_code"), "Village");
+                        capitalizeWords(villageMtaa + " - " + wardName + " - " + councilName), facilityJson.getString("village_mtaa_code"), "Village");
             } catch (Exception e) {
                 LOGGER.severe("Error processing Admin Hierarchy " + e.getMessage());
             }
         }
+    }
+
+    private static String sanitizeVillageMtaaName(String villageMtaa) {
+        if (villageMtaa == null) {
+            return "";
+        }
+        return villageMtaa.replaceAll("(?i)\\s*(mtaa|street)\\s*$", "").trim();
+    }
+
+    private static String sanitizeWardName(String wardName) {
+        if (wardName == null) {
+            return "";
+        }
+        return wardName.replaceAll("(?i)\\s*ward\\s*$", "").trim();
     }
 
     /**
