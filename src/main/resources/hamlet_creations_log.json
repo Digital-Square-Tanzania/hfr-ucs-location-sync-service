@@ -1,2 +1,272 @@
 [
+  {
+    "parentName": "Mikocheni - Mkwaja",
+    "code": "TZ.NT.TN.PA.5.12.2.3",
+    "name": "Shirikishoni - Mikocheni - Mkwaja",
+    "tag": "Hamlet",
+    "source": "hamlets_list.csv",
+    "uuid": "13e3fa7e-ecf3-4f9d-9c3e-d0e2b3b48b4e",
+    "parentUuid": "fbbeccf8-9a56-47cb-ac75-83a41b0b6f6b",
+    "timestamp": "2026-05-13T11:15:21.875031Z"
+  },
+  {
+    "parentName": "Mikocheni - Mkwaja",
+    "code": "TZ.NT.TN.PA.5.12.2.2",
+    "name": "Mikocheni Kijijini - Mikocheni - Mkwaja",
+    "tag": "Hamlet",
+    "source": "hamlets_list.csv",
+    "uuid": "46cea721-b191-4b70-ad9b-18a45d5e7e75",
+    "parentUuid": "fbbeccf8-9a56-47cb-ac75-83a41b0b6f6b",
+    "timestamp": "2026-05-13T11:15:35.564885Z"
+  },
+  {
+    "parentName": "Mikocheni - Mkwaja",
+    "code": "TZ.NT.TN.PA.5.12.2.1",
+    "name": "Mbugani - Mikocheni - Mkwaja",
+    "tag": "Hamlet",
+    "source": "hamlets_list.csv",
+    "uuid": "18472607-08d4-4e34-9d0d-16d35f32fe99",
+    "parentUuid": "fbbeccf8-9a56-47cb-ac75-83a41b0b6f6b",
+    "timestamp": "2026-05-13T11:15:41.067853Z"
+  },
+  {
+    "parentName": "Mwembeni - Madanga - Pangani DC",
+    "code": "TZ.NT.TN.PA.5.4.1.1",
+    "name": "Makuyuni - Mwembeni - Madanga",
+    "tag": "Hamlet",
+    "source": "hamlets_list.csv",
+    "uuid": "4e4c509b-533e-4af1-943b-e91e63f13ad2",
+    "parentUuid": "1f9237a0-d980-4635-84aa-4c2da1d64fcb",
+    "timestamp": "2026-05-13T11:15:42.680739Z"
+  },
+  {
+    "parentName": "Mwembeni - Madanga - Pangani DC",
+    "code": "TZ.NT.TN.PA.5.4.1.2",
+    "name": "Mitiulaya - Mwembeni - Madanga",
+    "tag": "Hamlet",
+    "source": "hamlets_list.csv",
+    "uuid": "98ff3e41-4b0c-4683-b30d-e066feb6fa89",
+    "parentUuid": "1f9237a0-d980-4635-84aa-4c2da1d64fcb",
+    "timestamp": "2026-05-13T11:15:47.655685Z"
+  },
+  {
+    "parentName": "Mwembeni - Madanga - Pangani DC",
+    "code": "TZ.NT.TN.PA.5.4.1.3",
+    "name": "Mwembeni - Mwembeni - Madanga",
+    "tag": "Hamlet",
+    "source": "hamlets_list.csv",
+    "uuid": "ca61fc9c-6697-48ff-9776-7be822e510ff",
+    "parentUuid": "1f9237a0-d980-4635-84aa-4c2da1d64fcb",
+    "timestamp": "2026-05-13T11:15:50.386615Z"
+  },
+  {
+    "parentName": "Mwembeni - Madanga - Pangani DC",
+    "code": "TZ.NT.TN.PA.5.4.1.4",
+    "name": "Nunda - Mwembeni - Madanga",
+    "tag": "Hamlet",
+    "source": "hamlets_list.csv",
+    "uuid": "61b62d1d-7de8-4642-8f15-f33169ccf2b2",
+    "parentUuid": "1f9237a0-d980-4635-84aa-4c2da1d64fcb",
+    "timestamp": "2026-05-13T11:15:51.722074Z"
+  },
+  {
+    "parentName": "Mkwajuni - Ubangaa - Pangani DC",
+    "code": "TZ.NT.TN.PA.5.11.3.2",
+    "name": "Mkwajuni - Mkwajuni - Ubangaa",
+    "tag": "Hamlet",
+    "source": "hamlets_list.csv",
+    "uuid": "81c59ff4-740e-494f-b541-eaf41e45ec9e",
+    "parentUuid": "a3b5edb8-8bf2-4a3c-8330-f8b11cfb2d9e",
+    "timestamp": "2026-05-13T11:15:54.086522Z"
+  },
+  {
+    "parentName": "Mkwajuni - Ubangaa - Pangani DC",
+    "code": "TZ.NT.TN.PA.5.11.3.1",
+    "name": "Mashine YA Maji - Mkwajuni - Ubangaa",
+    "tag": "Hamlet",
+    "source": "hamlets_list.csv",
+    "uuid": "f1922a55-1de6-49e1-b02e-3a352efb47c0",
+    "parentUuid": "a3b5edb8-8bf2-4a3c-8330-f8b11cfb2d9e",
+    "timestamp": "2026-05-13T11:15:55.769335Z"
+  },
+  {
+    "parentName": "Pangani Magharibi - Pangani Magharibi - Pangani DC",
+    "code": "TZ.NT.TN.PA.5.2.4.3",
+    "name": "Sokoni - Pangani Magharibi - Pangani Magharibi",
+    "tag": "Hamlet",
+    "source": "hamlets_list.csv",
+    "uuid": "7c4e99da-b9a8-4192-82fb-3f8a63607a7c",
+    "parentUuid": "ec9da45a-75c1-4a8f-b6e5-3d025ef96854",
+    "timestamp": "2026-05-13T11:15:57.561733Z"
+  },
+  {
+    "parentName": "Pangani Magharibi - Pangani Magharibi - Pangani DC",
+    "code": "TZ.NT.TN.PA.5.2.4.2",
+    "name": "Kumba - Pangani Magharibi - Pangani Magharibi",
+    "tag": "Hamlet",
+    "source": "hamlets_list.csv",
+    "uuid": "62daad6f-b460-4034-a127-f67f1ee0a92b",
+    "parentUuid": "ec9da45a-75c1-4a8f-b6e5-3d025ef96854",
+    "timestamp": "2026-05-13T11:15:59.793122Z"
+  },
+  {
+    "parentName": "Pangani Magharibi - Pangani Magharibi - Pangani DC",
+    "code": "TZ.NT.TN.PA.5.2.4.1",
+    "name": "Kinarani - Pangani Magharibi - Pangani Magharibi",
+    "tag": "Hamlet",
+    "source": "hamlets_list.csv",
+    "uuid": "022f19bc-ab1f-4153-8b4b-b69c38827797",
+    "parentUuid": "ec9da45a-75c1-4a8f-b6e5-3d025ef96854",
+    "timestamp": "2026-05-13T11:16:02.650313Z"
+  },
+  {
+    "parentName": "Tumbi Village - Masaika - Pangani DC",
+    "code": "TZ.NT.TN.PA.5.14.1.1",
+    "name": "Famu Unyamwezi - Tumbi - Masaika Ward",
+    "tag": "Hamlet",
+    "source": "hamlets_list.csv",
+    "uuid": "4a3aec9f-01cf-4638-ac60-012f86bf803d",
+    "parentUuid": "9397023d-0619-4f84-8f91-29593ba1d16f",
+    "timestamp": "2026-05-13T11:46:00.352978Z"
+  },
+  {
+    "parentName": "Tumbi Village - Masaika - Pangani DC",
+    "code": "TZ.NT.TN.PA.5.14.3.1",
+    "name": "Igange - Tumbi - Masaika Ward",
+    "tag": "Hamlet",
+    "source": "hamlets_list.csv",
+    "uuid": "f601e884-0dc3-4e16-92fc-709cf75deeef",
+    "parentUuid": "9397023d-0619-4f84-8f91-29593ba1d16f",
+    "timestamp": "2026-05-13T11:46:08.925999Z"
+  },
+  {
+    "parentName": "Tumbi Village - Masaika - Pangani DC",
+    "code": "TZ.NT.TN.PA.5.14.4.1",
+    "name": "Itema - Tumbi - Masaika",
+    "tag": "Hamlet",
+    "source": "hamlets_list.csv",
+    "uuid": "7505b47a-4e05-4dde-b024-e4a14ef945c4",
+    "parentUuid": "9397023d-0619-4f84-8f91-29593ba1d16f",
+    "timestamp": "2026-05-13T12:02:59.378745Z"
+  },
+  {
+    "parentName": "Tumbi Village - Masaika - Pangani DC",
+    "code": "TZ.NT.TN.PA.5.14.9.1",
+    "name": "Kipela Mashariki - Tumbi - Masaika",
+    "tag": "Hamlet",
+    "source": "hamlets_list.csv",
+    "uuid": "7840191c-1313-46eb-9ce7-f52608339d8c",
+    "parentUuid": "9397023d-0619-4f84-8f91-29593ba1d16f",
+    "timestamp": "2026-05-13T12:03:03.916833Z"
+  },
+  {
+    "parentName": "Tumbi Village - Masaika - Pangani DC",
+    "code": "TZ.NT.TN.PA.5.14.14.1",
+    "name": "Ufunga - Tumbi - Masaika",
+    "tag": "Hamlet",
+    "source": "hamlets_list.csv",
+    "uuid": "21a91911-4431-40f0-b10f-e432f097ed30",
+    "parentUuid": "9397023d-0619-4f84-8f91-29593ba1d16f",
+    "timestamp": "2026-05-13T12:03:04.985506Z"
+  },
+  {
+    "parentName": "Tumbi Village - Masaika - Pangani DC",
+    "code": "TZ.NT.TN.PA.5.14.11.1",
+    "name": "Sokoine - Tumbi - Masaika",
+    "tag": "Hamlet",
+    "source": "hamlets_list.csv",
+    "uuid": "bb29d583-eff4-4595-9e31-f685571981ab",
+    "parentUuid": "9397023d-0619-4f84-8f91-29593ba1d16f",
+    "timestamp": "2026-05-13T12:03:05.907118Z"
+  },
+  {
+    "parentName": "Tumbi Village - Masaika - Pangani DC",
+    "code": "TZ.NT.TN.PA.5.14.5.1",
+    "name": "Iyombo Na.9 - Tumbi - Masaika",
+    "tag": "Hamlet",
+    "source": "hamlets_list.csv",
+    "uuid": "975ecd8a-0622-449c-96ce-764c121f99fa",
+    "parentUuid": "9397023d-0619-4f84-8f91-29593ba1d16f",
+    "timestamp": "2026-05-13T12:03:06.931845Z"
+  },
+  {
+    "parentName": "Tumbi Village - Masaika - Pangani DC",
+    "code": "TZ.NT.TN.PA.5.14.10.1",
+    "name": "Labour - Tumbi - Masaika",
+    "tag": "Hamlet",
+    "source": "hamlets_list.csv",
+    "uuid": "ae0612d4-489e-43aa-b706-9b7e5d0bb62b",
+    "parentUuid": "9397023d-0619-4f84-8f91-29593ba1d16f",
+    "timestamp": "2026-05-13T12:03:08.360021Z"
+  },
+  {
+    "parentName": "Tumbi Village - Masaika - Pangani DC",
+    "code": "TZ.NT.TN.PA.5.14.8.1",
+    "name": "Kipela Kusini - Tumbi - Masaika",
+    "tag": "Hamlet",
+    "source": "hamlets_list.csv",
+    "uuid": "22cdf016-0128-4043-99d4-354de979e76d",
+    "parentUuid": "9397023d-0619-4f84-8f91-29593ba1d16f",
+    "timestamp": "2026-05-13T12:03:09.108164Z"
+  },
+  {
+    "parentName": "Tumbi Village - Masaika - Pangani DC",
+    "code": "TZ.NT.TN.PA.5.14.6.1",
+    "name": "Iyombo Na.8 - Tumbi - Masaika",
+    "tag": "Hamlet",
+    "source": "hamlets_list.csv",
+    "uuid": "b895cac0-e6f7-4fd6-8a40-02c39a873128",
+    "parentUuid": "9397023d-0619-4f84-8f91-29593ba1d16f",
+    "timestamp": "2026-05-13T12:03:10.092899Z"
+  },
+  {
+    "parentName": "Tumbi Village - Masaika - Pangani DC",
+    "code": "TZ.NT.TN.PA.5.14.13.1",
+    "name": "Tumbi Kibaoni B - Tumbi - Masaika",
+    "tag": "Hamlet",
+    "source": "hamlets_list.csv",
+    "uuid": "71155038-ed60-4c72-9b3d-1addae18547e",
+    "parentUuid": "9397023d-0619-4f84-8f91-29593ba1d16f",
+    "timestamp": "2026-05-13T12:03:10.937338Z"
+  },
+  {
+    "parentName": "Tumbi Village - Masaika - Pangani DC",
+    "code": "TZ.NT.TN.PA.5.14.7.1",
+    "name": "Kipela Kaskazini - Tumbi - Masaika",
+    "tag": "Hamlet",
+    "source": "hamlets_list.csv",
+    "uuid": "2f86a57e-0034-4707-b08f-51661cc52297",
+    "parentUuid": "9397023d-0619-4f84-8f91-29593ba1d16f",
+    "timestamp": "2026-05-13T12:03:11.696972Z"
+  },
+  {
+    "parentName": "Tumbi Village - Masaika - Pangani DC",
+    "code": "TZ.NT.TN.PA.5.14.2.1",
+    "name": "Igagala - Tumbi - Masaika",
+    "tag": "Hamlet",
+    "source": "hamlets_list.csv",
+    "uuid": "ea91d5e7-d41a-4a72-8ccb-322b2a69ebea",
+    "parentUuid": "9397023d-0619-4f84-8f91-29593ba1d16f",
+    "timestamp": "2026-05-13T12:03:12.448521Z"
+  },
+  {
+    "parentName": "Tumbi Village - Masaika - Pangani DC",
+    "code": "TZ.NT.TN.PA.5.14.15.1",
+    "name": "Wala - Tumbi - Masaika",
+    "tag": "Hamlet",
+    "source": "hamlets_list.csv",
+    "uuid": "1b4a5e75-a968-4f84-980a-1f06726ea48a",
+    "parentUuid": "9397023d-0619-4f84-8f91-29593ba1d16f",
+    "timestamp": "2026-05-13T12:03:13.719391Z"
+  },
+  {
+    "parentName": "Tumbi Village - Masaika - Pangani DC",
+    "code": "TZ.NT.TN.PA.5.14.12.1",
+    "name": "Tumbi Kibaoni A - Tumbi - Masaika",
+    "tag": "Hamlet",
+    "source": "hamlets_list.csv",
+    "uuid": "c3d9978b-bde1-4b57-8ffe-3ff711aa6ef9",
+    "parentUuid": "9397023d-0619-4f84-8f91-29593ba1d16f",
+    "timestamp": "2026-05-13T12:03:14.717825Z"
+  }
 ]

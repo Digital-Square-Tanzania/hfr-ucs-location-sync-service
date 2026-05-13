@@ -187,32 +187,29 @@ public class Utils {
             try {
                 for (LocationCSVRow row : rows) {
                     try {
-                        Location wardLocation = resolveWardLocation(row);
-
-                        Location villageLocation = null;
-                        if (row.getVillageCode() != null && !row.getVillageCode().isEmpty()) {
-                            villageLocation = findLocationByCode(row.getVillageCode());
-                            if (wardLocation != null && row.getVillage() != null && !row.getVillage().isEmpty()) {
-                                villageLocation = ensureLocationExists(
-                                        wardLocation,
-                                        buildVillageName(row),
-                                        row.getVillageCode(),
-                                        "Village");
-                            } else if (wardLocation == null && villageLocation == null) {
-                                LOGGER.warning("Ward not found when creating village for code " + row.getVillageCode());
-                            }
+                        String hamletCode = trimToNull(row.getHamletCode());
+                        String hamlet = trimToNull(row.getHamlet());
+                        if (hamletCode == null || hamlet == null) {
+                            LOGGER.warning("Missing hamlet code or name in CSV row");
+                            continue;
                         }
 
-                        if (row.getHamlet() != null && !row.getHamlet().isEmpty()) {
-                            if (villageLocation == null && row.getVillageCode() != null && !row.getVillageCode().isEmpty()) {
-                                villageLocation = findLocationByCode(row.getVillageCode());
-                            }
+                        if (findLocationByCode(hamletCode) != null) {
+                            LOGGER.info("Hamlet already exists for code " + hamletCode + ". Skipping import.");
+                            continue;
+                        }
 
-                            if (villageLocation != null) {
-                                ensureLocationExists(villageLocation, buildHamletName(row), row.getHamletCode(), "Hamlet");
-                            } else {
-                                LOGGER.info("Village not found for hamlet code " + row.getHamletCode());
-                            }
+                        String villageCode = trimToNull(row.getVillageCode());
+                        if (villageCode == null) {
+                            LOGGER.info("Village code missing for hamlet code " + hamletCode);
+                            continue;
+                        }
+
+                        Location villageLocation = findLocationByCode(villageCode);
+                        if (villageLocation != null) {
+                            ensureLocationExists(villageLocation, buildHamletName(row), hamletCode, "Hamlet");
+                        } else {
+                            LOGGER.info("Village not found for hamlet code " + hamletCode);
                         }
                     } catch (Exception e) {
                         LOGGER.log(Level.SEVERE, "Error importing location row", e);

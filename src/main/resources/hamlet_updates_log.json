@@ -1,2 +1,13 @@
-[
-]
+[{
+  "updatedName": "Mikocheni Village - Mkwaja",
+  "code": "TZ.NT.TN.PA.5.12.2",
+  "previousParentUuid": "51b47075-a926-4b04-ac48-6c4194048ebd",
+  "previousName": "Mikocheni - Mkwaja - Pangani DC",
+  "changes": ["Name updated from 'Mikocheni - Mkwaja - Pangani DC' to 'Mikocheni Village - Mkwaja'"],
+  "previousParentName": "Mkwaja - Pangani DC",
+  "newParentUuid": "51b47075-a926-4b04-ac48-6c4194048ebd",
+  "tag": "Village",
+  "source": "hamlets_list.csv",
+  "newParentName": "Mkwaja - Pangani DC",
+  "timestamp": "2026-05-13T10:59:00.735594Z"
+}]

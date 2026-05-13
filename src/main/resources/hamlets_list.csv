@@ -1,12 +1,111 @@
-Wards/Villlages/Hamlet	Location Type (WARD, VILLAGE, HAMLET)	Incorrect HFR Code	Correct HFR Code	UID
-Kimara Village,Village,TZ.ET.PW.KH.2.10.2,TZ.ET.PW.KH.2.15.2,Ub5pwhX3Hxw
-Makazi mapya Village,Village,TZ.ET.PW.KH.2.10.3,TZ.ET.PW.KH.2.15.3,veb9qM7E2SX
-Matuga Village,Village,TZ.ET.PW.KH.2.10.1,TZ.ET.PW.KH.2.15.1,YCHkNPRcqFb
-Makotopola Village Makotopora,Village,TZ.ET.PW.KH.2.5.2,TZ.ET.PW.KH.2.5.2,GxRA12h4qds
-Mtambani Village,Village,TZ.ET.PW.KH.2.7.4,TZ.ET.PW.KH.2.12.1,qAxbvzkiNOW
-Mhande Village   Mihande,Village,TZ.ET.PW.KH.2.7.2,TZ.ET.PW.KH.2.7.2,Owokj9hcNBu
-Njia panda Jeshini Village Njia Panda JKT,Village,TZ.ET.PW.KH.2.7.5,TZ.ET.PW.KH.2.12.2,NkZCTjLgls8
-Kimara Kitongoji,Village,TZ.ET.PW.KH.2.10.2,TZ.ET.PW.KH.2.15.2,
-Makazi mapya Kitongoji,Village,TZ.ET.PW.KH.2.10.3,TZ.ET.PW.KH.2.15.3,
-Matuga Kitongoji,Village,TZ.ET.PW.KH.2.10.1,TZ.ET.PW.KH.2.15.1,
-Kisabi Village,Village,TZ.ET.PW.KH.2.9.4,TZ.ET.PW.KH.2.13.1,FdUH70lOj49
+region_code,region,council_code,council,ward_code,ward,village_code,Village,hamlet_code,hamlet
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.13,Mkalamo,TZ.NT.TN.PA.5.13.5,Makayo,TZ.NT.TN.PA.5.13.5.2,Lolumesela
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.13,Mkalamo,TZ.NT.TN.PA.5.13.5,Makayo,TZ.NT.TN.PA.5.13.5.1,Levera
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.13,Mkalamo,TZ.NT.TN.PA.5.13.5,Makayo,TZ.NT.TN.PA.5.13.5.5,Mateke
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.13,Mkalamo,TZ.NT.TN.PA.5.13.5,Makayo,TZ.NT.TN.PA.5.13.5.4,Makayo
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.13,Mkalamo,TZ.NT.TN.PA.5.13.5,Makayo,TZ.NT.TN.PA.5.13.5.3,Lubena
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.13,Mkalamo,TZ.NT.TN.PA.5.13.3,Mpasilasi,TZ.NT.TN.PA.5.13.3.2,Mhandeni
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.13,Mkalamo,TZ.NT.TN.PA.5.13.3,Mpasilasi,TZ.NT.TN.PA.5.13.3.1,Kwakiyege
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.13,Mkalamo,TZ.NT.TN.PA.5.13.4,Mkalamo,TZ.NT.TN.PA.5.13.4.3,Mhunguru
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.13,Mkalamo,TZ.NT.TN.PA.5.13.4,Mkalamo,TZ.NT.TN.PA.5.13.4.4,Mtakuja
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.13,Mkalamo,TZ.NT.TN.PA.5.13.4,Mkalamo,TZ.NT.TN.PA.5.13.4.1,Boza
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.13,Mkalamo,TZ.NT.TN.PA.5.13.4,Mkalamo,TZ.NT.TN.PA.5.13.4.5,Sokoni
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.13,Mkalamo,TZ.NT.TN.PA.5.13.4,Mkalamo,TZ.NT.TN.PA.5.13.4.2,Chamwino
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.13,Mkalamo,TZ.NT.TN.PA.5.13.6,Toronto Mbugani,TZ.NT.TN.PA.5.13.6.3,Toronto Estate
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.13,Mkalamo,TZ.NT.TN.PA.5.13.6,Toronto Mbugani,TZ.NT.TN.PA.5.13.6.2,Mbuyuni Estate
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.13,Mkalamo,TZ.NT.TN.PA.5.13.6,Toronto Mbugani,TZ.NT.TN.PA.5.13.6.1,"Manyata ""A"""
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.1,Pangani Mashariki,TZ.NT.TN.PA.5.1.2,Pangani Mashariki,TZ.NT.TN.PA.5.1.2.1,Funguni
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.1,Pangani Mashariki,TZ.NT.TN.PA.5.1.2,Pangani Mashariki,TZ.NT.TN.PA.5.1.2.4,Mkoma
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.1,Pangani Mashariki,TZ.NT.TN.PA.5.1.2,Pangani Mashariki,TZ.NT.TN.PA.5.1.2.3,Malindi
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.1,Pangani Mashariki,TZ.NT.TN.PA.5.1.2,Pangani Mashariki,TZ.NT.TN.PA.5.1.2.2,Gombero
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.15,Kimang'a,TZ.NT.TN.PA.5.15.1,Kimang'a,TZ.NT.TN.PA.5.15.1.1,"Kimang'a ""B"""
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.15,Kimang'a,TZ.NT.TN.PA.5.15.1,Kimang'a,TZ.NT.TN.PA.5.15.1.2,Mbuyuni
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.15,Kimang'a,TZ.NT.TN.PA.5.15.1,Kimang'a,TZ.NT.TN.PA.5.15.1.3,"Kimang'a ""A"""
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.6,Bushiri,TZ.NT.TN.PA.5.6.2,Msaraza,TZ.NT.TN.PA.5.6.2.2,Matakani
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.6,Bushiri,TZ.NT.TN.PA.5.6.2,Msaraza,TZ.NT.TN.PA.5.6.2.4,Sahanini
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.6,Bushiri,TZ.NT.TN.PA.5.6.2,Msaraza,TZ.NT.TN.PA.5.6.2.1,Bushiri Estate
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.6,Bushiri,TZ.NT.TN.PA.5.6.2,Msaraza,TZ.NT.TN.PA.5.6.2.3,Msaraza
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.6,Bushiri,TZ.NT.TN.PA.5.6.1,Mivumoni,TZ.NT.TN.PA.5.6.1.2,Mivumoni
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.6,Bushiri,TZ.NT.TN.PA.5.6.1,Mivumoni,TZ.NT.TN.PA.5.6.1.1,Kovukovu
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.6,Bushiri,TZ.NT.TN.PA.5.6.4,Masaika,TZ.NT.TN.PA.5.6.4.2,Godown
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.6,Bushiri,TZ.NT.TN.PA.5.6.4,Masaika,TZ.NT.TN.PA.5.6.4.3,Jitengeni
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.6,Bushiri,TZ.NT.TN.PA.5.6.4,Masaika,TZ.NT.TN.PA.5.6.4.1,Bondeni
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.6,Bushiri,TZ.NT.TN.PA.5.6.4,Masaika,TZ.NT.TN.PA.5.6.4.4,Mlimani
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.6,Bushiri,TZ.NT.TN.PA.5.6.3,Kigurusimba,TZ.NT.TN.PA.5.6.3.5,Pombwe
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.6,Bushiri,TZ.NT.TN.PA.5.6.3,Kigurusimba,TZ.NT.TN.PA.5.6.3.1,Kijiweni
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.6,Bushiri,TZ.NT.TN.PA.5.6.3,Kigurusimba,TZ.NT.TN.PA.5.6.3.3,Misufini
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.6,Bushiri,TZ.NT.TN.PA.5.6.3,Kigurusimba,TZ.NT.TN.PA.5.6.3.4,Mrozo
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.6,Bushiri,TZ.NT.TN.PA.5.6.3,Kigurusimba,TZ.NT.TN.PA.5.6.3.2,Kitivo
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.3,Bweni,TZ.NT.TN.PA.5.3.1,Bweni,TZ.NT.TN.PA.5.3.1.2,Kikokwe
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.3,Bweni,TZ.NT.TN.PA.5.3.1,Bweni,TZ.NT.TN.PA.5.3.1.1,Bweni
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.3,Bweni,TZ.NT.TN.PA.5.3.1,Bweni,TZ.NT.TN.PA.5.3.1.3,Mashado
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.12,Mkwaja,TZ.NT.TN.PA.5.12.1,Sange,TZ.NT.TN.PA.5.12.1.2,Sange Kijijini
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.12,Mkwaja,TZ.NT.TN.PA.5.12.1,Sange,TZ.NT.TN.PA.5.12.1.1,Makorora
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.12,Mkwaja,TZ.NT.TN.PA.5.12.1,Sange,TZ.NT.TN.PA.5.12.1.3,Sange Kuu
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.12,Mkwaja,TZ.NT.TN.PA.5.12.3,Mkwaja,TZ.NT.TN.PA.5.12.3.1,Mkwaja Kijijini
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.12,Mkwaja,TZ.NT.TN.PA.5.12.4,Buyuni,TZ.NT.TN.PA.5.12.4.1,Buyuni Kuu
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.12,Mkwaja,TZ.NT.TN.PA.5.12.4,Buyuni,TZ.NT.TN.PA.5.12.4.2,Kitopeni
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.4,Madanga,TZ.NT.TN.PA.5.4.3,Jaira,TZ.NT.TN.PA.5.4.3.1,Jaira
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.4,Madanga,TZ.NT.TN.PA.5.4.3,Jaira,TZ.NT.TN.PA.5.4.3.2,Kidutani
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.4,Madanga,TZ.NT.TN.PA.5.4.2,Madanga,TZ.NT.TN.PA.5.4.2.3,Ng‚Äôambo
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.4,Madanga,TZ.NT.TN.PA.5.4.2,Madanga,TZ.NT.TN.PA.5.4.2.1,Pangani Road
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.4,Madanga,TZ.NT.TN.PA.5.4.2,Madanga,TZ.NT.TN.PA.5.4.2.2,Barabarani
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.5,Kimang'a,TZ.NT.TN.PA.5.5.1,Boza,TZ.NT.TN.PA.5.5.1.3,Kibaazi
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.5,Kimang'a,TZ.NT.TN.PA.5.5.1,Boza,TZ.NT.TN.PA.5.5.1.2,Choba
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.5,Kimang'a,TZ.NT.TN.PA.5.5.1,Boza,TZ.NT.TN.PA.5.5.1.1,Boza
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.5,Kimang'a,TZ.NT.TN.PA.5.5.1,Boza,TZ.NT.TN.PA.5.5.1.4,Mnazi mmoja
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.7,Mwera,TZ.NT.TN.PA.5.7.2,Mzambarauni,TZ.NT.TN.PA.5.7.2.1,Bojo
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.7,Mwera,TZ.NT.TN.PA.5.7.2,Mzambarauni,TZ.NT.TN.PA.5.7.2.3,Mzambarauni
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.7,Mwera,TZ.NT.TN.PA.5.7.2,Mzambarauni,TZ.NT.TN.PA.5.7.2.2,Putini
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.7,Mwera,TZ.NT.TN.PA.5.7.3,Ushongo,TZ.NT.TN.PA.5.7.3.2,Ushongo Mtoni
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.7,Mwera,TZ.NT.TN.PA.5.7.3,Ushongo,TZ.NT.TN.PA.5.7.3.1,Ushongo Mabaoni
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.7,Mwera,TZ.NT.TN.PA.5.7.1,Mwera,TZ.NT.TN.PA.5.7.1.1,"Kirupu ""A"""
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.7,Mwera,TZ.NT.TN.PA.5.7.1,Mwera,TZ.NT.TN.PA.5.7.1.2,Kisondo
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.7,Mwera,TZ.NT.TN.PA.5.7.1,Mwera,TZ.NT.TN.PA.5.7.1.4,Mwera Kombania
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.7,Mwera,TZ.NT.TN.PA.5.7.1,Mwera,TZ.NT.TN.PA.5.7.1.3,Mwera Estate
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.10,Mikunguni,TZ.NT.TN.PA.5.10.3,Mikinguni,TZ.NT.TN.PA.5.10.3.1,Kwa Fakii
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.10,Mikunguni,TZ.NT.TN.PA.5.10.3,Mikinguni,TZ.NT.TN.PA.5.10.3.2,Kwamkwayu
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.10,Mikunguni,TZ.NT.TN.PA.5.10.2,Stahabu,TZ.NT.TN.PA.5.10.2.4,Stahabu Pwani
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.10,Mikunguni,TZ.NT.TN.PA.5.10.2,Stahabu,TZ.NT.TN.PA.5.10.2.1,Azimio
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.10,Mikunguni,TZ.NT.TN.PA.5.10.2,Stahabu,TZ.NT.TN.PA.5.10.2.3,Mkiziga
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.10,Mikunguni,TZ.NT.TN.PA.5.10.2,Stahabu,TZ.NT.TN.PA.5.10.2.2,Jasini
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.10,Mikunguni,TZ.NT.TN.PA.5.10.1,Mtango,TZ.NT.TN.PA.5.10.1.1,"Mtango ""A"""
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.10,Mikunguni,TZ.NT.TN.PA.5.10.1,Mtango,TZ.NT.TN.PA.5.10.1.3,"Mtango ""C"""
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.10,Mikunguni,TZ.NT.TN.PA.5.10.1,Mtango,TZ.NT.TN.PA.5.10.1.2,"Mtango ""B"""
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.10,Mikunguni,TZ.NT.TN.PA.5.10.4,Mtonga,TZ.NT.TN.PA.5.10.4.1,Mtonga
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.13,Mkalamo,TZ.NT.TN.PA.5.13.2,Mbulizaga,TZ.NT.TN.PA.5.13.2.1,Mbulizaga
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.8,Tungamaa,TZ.NT.TN.PA.5.8.2,Tungamaa,TZ.NT.TN.PA.5.8.2.1,Tungamaa
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.8,Tungamaa,TZ.NT.TN.PA.5.8.2,Tungamaa,TZ.NT.TN.PA.5.8.2.2,Kasanga
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.8,Tungamaa,TZ.NT.TN.PA.5.8.1,Langoni,TZ.NT.TN.PA.5.8.1.1,Kirupu B
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.8,Tungamaa,TZ.NT.TN.PA.5.8.1,Langoni,TZ.NT.TN.PA.5.8.1.4,Langoni
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.8,Tungamaa,TZ.NT.TN.PA.5.8.1,Langoni,TZ.NT.TN.PA.5.8.1.5,"Mahazara ""A"""
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.8,Tungamaa,TZ.NT.TN.PA.5.8.1,Langoni,TZ.NT.TN.PA.5.8.1.3,Makarawe
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.8,Tungamaa,TZ.NT.TN.PA.5.8.1,Langoni,TZ.NT.TN.PA.5.8.1.2,"Mahazara ""B"""
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.11,Ubangaa,TZ.NT.TN.PA.5.11.2,Mseko,TZ.NT.TN.PA.5.11.2.2,Mseko
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.11,Ubangaa,TZ.NT.TN.PA.5.11.2,Mseko,TZ.NT.TN.PA.5.11.2.1,Mahazara
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.11,Ubangaa,TZ.NT.TN.PA.5.11.4,Ubangaa,TZ.NT.TN.PA.5.11.4.2,Ubangaa
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.11,Ubangaa,TZ.NT.TN.PA.5.11.4,Ubangaa,TZ.NT.TN.PA.5.11.4.1,Kibinda
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.11,Ubangaa,TZ.NT.TN.PA.5.11.1,Meka,TZ.NT.TN.PA.5.11.1.1,Mafisi
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.11,Ubangaa,TZ.NT.TN.PA.5.11.1,Meka,TZ.NT.TN.PA.5.11.1.2,Meka
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.9,Kipumbwi,TZ.NT.TN.PA.5.9.1,Kwakibuyu,TZ.NT.TN.PA.5.9.1.2,Mkoko
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.9,Kipumbwi,TZ.NT.TN.PA.5.9.1,Kwakibuyu,TZ.NT.TN.PA.5.9.1.1,Kwakibuyu
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.9,Kipumbwi,TZ.NT.TN.PA.5.9.1,Kwakibuyu,TZ.NT.TN.PA.5.9.1.3,Sakura Estate
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.9,Kipumbwi,TZ.NT.TN.PA.5.9.2,Kipumbwi,TZ.NT.TN.PA.5.9.2.4,Serewani
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.9,Kipumbwi,TZ.NT.TN.PA.5.9.2,Kipumbwi,TZ.NT.TN.PA.5.9.2.2,Kipumbwi Mji Mpya
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.9,Kipumbwi,TZ.NT.TN.PA.5.9.2,Kipumbwi,TZ.NT.TN.PA.5.9.2.3,Kipumbwi Mtoni
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.9,Kipumbwi,TZ.NT.TN.PA.5.9.2,Kipumbwi,TZ.NT.TN.PA.5.9.2.1,Kipumbwi Mji Mkuu
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.14,Masaika,TZ.NT.TN.PA.5.14.1,Tumbi,TZ.NT.TN.PA.5.14.1.1,Famu unyamwezi
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.14,Masaika,TZ.NT.TN.PA.5.14.1,Tumbi,TZ.NT.TN.PA.5.14.3.1,Igange
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.14,Masaika,TZ.NT.TN.PA.5.14.1,Tumbi,TZ.NT.TN.PA.5.14.4.1,Itema
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.14,Masaika,TZ.NT.TN.PA.5.14.1,Tumbi,TZ.NT.TN.PA.5.14.9.1,Kipela Mashariki
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.14,Masaika,TZ.NT.TN.PA.5.14.1,Tumbi,TZ.NT.TN.PA.5.14.14.1,Ufunga
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.14,Masaika,TZ.NT.TN.PA.5.14.1,Tumbi,TZ.NT.TN.PA.5.14.11.1,Sokoine
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.14,Masaika,TZ.NT.TN.PA.5.14.1,Tumbi,TZ.NT.TN.PA.5.14.5.1,Iyombo Na.9
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.14,Masaika,TZ.NT.TN.PA.5.14.1,Tumbi,TZ.NT.TN.PA.5.14.10.1,Labour
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.14,Masaika,TZ.NT.TN.PA.5.14.1,Tumbi,TZ.NT.TN.PA.5.14.8.1,Kipela kusini
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.14,Masaika,TZ.NT.TN.PA.5.14.1,Tumbi,TZ.NT.TN.PA.5.14.6.1,Iyombo Na.8
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.14,Masaika,TZ.NT.TN.PA.5.14.1,Tumbi,TZ.NT.TN.PA.5.14.13.1,Tumbi Kibaoni B
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.14,Masaika,TZ.NT.TN.PA.5.14.1,Tumbi,TZ.NT.TN.PA.5.14.7.1,Kipela Kaskazini
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.14,Masaika,TZ.NT.TN.PA.5.14.1,Tumbi,TZ.NT.TN.PA.5.14.2.1,Igagala
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.14,Masaika,TZ.NT.TN.PA.5.14.1,Tumbi,TZ.NT.TN.PA.5.14.15.1,Wala
+TZ.NT.TN,Tanga Region,TZ.NT.TN.PA.5,Pangani District Council,TZ.NT.TN.PA.5.14,Masaika,TZ.NT.TN.PA.5.14.1,Tumbi,TZ.NT.TN.PA.5.14.12.1,Tumbi Kibaoni A
