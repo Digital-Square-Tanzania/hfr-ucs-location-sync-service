@@ -154,6 +154,7 @@ class UtilsTest {
 
             Location villageLoc = new Location();
             villageLoc.setLocationId("village-uuid");
+            mockUtils.when(() -> Utils.findLocationByCode("H123")).thenReturn(null);
             mockUtils.when(() -> Utils.findLocationByCode("V123")).thenReturn(villageLoc);
             mockUtils.when(() -> Utils.ensureLocationExists(any(), any(), any(), eq("Hamlet")))
                     .thenReturn(new Location());
@@ -161,6 +162,33 @@ class UtilsTest {
             Utils.importHamletLocationsFromCSV("test.csv");
 
             mockReader.verify(() -> CSVReaderUtil.readCsvFromResources("test.csv"), times(1));
+            mockUtils.verify(() -> Utils.ensureLocationExists(villageLoc, "Hamlet - Village - Ward", "H123", "Hamlet"), times(1));
+            mockUtils.verify(() -> Utils.ensureLocationExists(any(), any(), any(), eq("Village")), never());
+        }
+    }
+
+    @Test
+    void testImportHamletLocationsFromCSVSkipsExistingHamlet() {
+        List<LocationCSVRow> rows = new ArrayList<>();
+        LocationCSVRow row = new LocationCSVRow();
+        row.setVillageCode("V123");
+        row.setVillage("Village");
+        row.setWard("Ward");
+        row.setHamlet("Hamlet");
+        row.setHamletCode("H123");
+        rows.add(row);
+
+        try (MockedStatic<CSVReaderUtil> mockReader = mockStatic(CSVReaderUtil.class);
+             MockedStatic<Utils> mockUtils = mockStatic(Utils.class, CALLS_REAL_METHODS)) {
+
+            mockReader.when(() -> CSVReaderUtil.readCsvFromResources("test.csv")).thenReturn(rows);
+            mockUtils.when(() -> Utils.findLocationByCode("H123")).thenReturn(new Location());
+
+            Utils.importHamletLocationsFromCSV("test.csv");
+
+            mockUtils.verify(() -> Utils.findLocationByCode("V123"), never());
+            mockUtils.verify(() -> Utils.ensureLocationExists(any(), any(), any(), eq("Hamlet")), never());
+            mockUtils.verify(() -> Utils.ensureLocationExists(any(), any(), any(), eq("Village")), never());
         }
     }
 
